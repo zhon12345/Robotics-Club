@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ccc;
+}
+form {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 20px solid #a9a9a9;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  width: 200px;
+  height: 50px;
+  transform: translateX(25%);
+}
+.error {
+  color: red;
+  margin-top: 5px;
+}
