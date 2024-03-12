@@ -1,0 +1,57 @@
+@import url(https://fonts.bunny.net/css?family=montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i);
+
+* {
+	font-family: 'Montserrat', sans-serif;
+	color: var(--black);
+}
+
+:root {
+	--black: rgba(0, 0, 0, 0.85);
+	--box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+::-webkit-scrollbar {
+	width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #97a8ab;
+	border-radius: 15px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #758285;
+}
+
+/* Universal Styles */
+.container {
+	margin: 0 auto;
+	max-width: 1200px;
+	padding: 0 19px;
+}
+
+.section-header {
+	font-size: 2rem;
+	margin-bottom: 2rem;
+}
+
+section[class$='section'] {
+	padding: 6rem 0;
+}
+
+button {
+	padding: 10px 10px;
+	background: transparent;
+	border: 2px solid var(--black);
+	transition: all 0.3s ease-in;
+	color: var(--black);
+	font-weight: 500;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: var(--black);
+	color: white;
+}

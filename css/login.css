@@ -1,0 +1,168 @@
+.account-section {
+	background-color: #383838;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+}
+
+.forms-container {
+	background-color: #fff;
+	box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.3);
+	width: 400px;
+	max-width: 100%;
+	padding: 30px;
+	margin: auto;
+}
+
+.not-active {
+	display: none;
+}
+
+/* Login & Register Form */
+
+header {
+	text-align: center;
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.forms-container form {
+	box-sizing: border-box;
+	padding-top: 30px;
+	width: 100%;
+}
+
+.form-input {
+	margin-top: 10px;
+	padding-bottom: 20px;
+	position: relative;
+}
+
+.form-input label {
+	display: inline-block;
+	font-size: 14px;
+	padding-left: 5px;
+	margin-bottom: 5px;
+}
+
+.form-input input {
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 1px solid #898989;
+	display: block;
+	font-size: 14px;
+	padding: 10px 30px;
+	width: 100%;
+	outline: none;
+}
+
+.form-input span,
+.form-input i {
+	position: absolute;
+	top: 32px;
+}
+
+.form-input span {
+	left: 10px;
+}
+
+.form-input i {
+	right: 10px;
+	visibility: hidden;
+}
+
+.form-input small {
+	visibility: hidden;
+	position: absolute;
+	padding-top: 2px;
+	left: 0;
+}
+
+.form-input.success input {
+	border-color: #2ecc71;
+}
+
+.form-input.success i.fa-circle-check {
+	visibility: visible;
+	color: #2ecc71;
+}
+
+.form-input.error input {
+	border-color: #e74c3c;
+}
+
+.form-input.error i.fa-circle-exclamation,
+.form-input.error small {
+	visibility: visible;
+	color: #e74c3c;
+}
+
+.form-link {
+	width: 100%;
+	text-align: center;
+}
+
+.form-link span,
+.form-link a {
+	font-size: 14px;
+}
+
+.form-link a:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.form-button > input {
+	display: block;
+	width: 100%;
+	font-size: 16px;
+	margin: 15px 0;
+}
+
+/* Media Buttons */
+.line {
+	background-color: #898989;
+	position: relative;
+	height: 1px;
+	width: 100%;
+	margin: 38px 0 30px;
+}
+
+.line::before {
+	content: 'OR';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	padding: 0 10px;
+}
+
+.media-options {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 1.5rem;
+}
+
+.media-options a {
+	width: 45%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	border: 1px solid #898989;
+	border-radius: 2px;
+	transition: all 0.2s ease-in;
+}
+
+.media-options a:hover {
+	border-color: var(--black);
+}
+
+.media-options svg {
+	width: 25px;
+}
+
+.media-options span {
+	font-size: 14px;
+}
