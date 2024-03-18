@@ -1,104 +1,42 @@
-body {
-  font-family: OCR A Std, monospace;
-  background-color: black;
-}
-
-.title {
-  overflow: hidden;
-}
-.title img {
-  float: left;
-  margin-right: 10px;
-  height: 80px;
-  width: auto;
-}
-.title h1 {
-  float: left;
-  color: aliceblue;
-}
-
-.title hr {
-  clear: both;
-  border: 3px solid rgb(123, 123, 123);
-  margin-top: 20px;
-}
-
-.title .link-button {
-  float: right;
-  background-color: #f0f0f0;
-  padding: 20px 40px;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  text-decoration: none;
-  color: #333;
-  font-size: 25px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.icon-button {
-  float: right;
-  background-color: #f0f0f0;
-  padding: 40px 40px;
-  border: 1px solid #ccc;
-  border-radius: 50px;
-  text-decoration: none;
-  color: #333;
-  font-size: 25px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-body {
-  background-color: black;
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 20px;
-  position: relative;
-}
-
-.title h1 {
-  padding: 0;
-  color: white;
+.about-section {
+	padding-bottom: 0 !important;
 }
 
 .grid-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	position: relative;
 }
 
 .grid-item {
-  position: relative;
-  width: 25%;
-  margin: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-  overflow: hidden;
+	position: relative;
+	width: 25%;
+	margin: 10px;
+	border: 1px solid #ddd;
+	text-align: center;
+	overflow: hidden;
 }
 
 .grid-item img {
-  width: 100%;
-  height: auto;
-  display: block;
+	width: 100%;
+	height: auto;
+	display: block;
 }
 
 .grid-item .text-container {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-  font-size: 20px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 10px;
+	font-size: 20px;
 }
 
 .centered-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
 }

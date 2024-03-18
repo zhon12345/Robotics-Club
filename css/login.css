@@ -1,15 +1,12 @@
 .account-section {
-	background-color: #383838;
-	min-height: 100vh;
+	height: 100vh;
 	display: flex;
-	align-items: center;
 }
 
 .forms-container {
 	background-color: #fff;
 	box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.3);
 	width: 400px;
-	max-width: 100%;
 	padding: 30px;
 	margin: auto;
 }
@@ -21,6 +18,7 @@
 /* Login & Register Form */
 
 header {
+	color: var(--lead-black);
 	text-align: center;
 	font-size: 24px;
 	font-weight: 600;
@@ -33,19 +31,23 @@ header {
 }
 
 .form-input {
-	margin-top: 10px;
+	margin-top: 15px;
 	padding-bottom: 20px;
 	position: relative;
 }
 
 .form-input label {
+	color: var(--lead-black);
 	display: inline-block;
 	font-size: 14px;
+	font-weight: 300;
 	padding-left: 5px;
 	margin-bottom: 5px;
 }
 
 .form-input input {
+	background-color: transparent;
+	color: var(--eerie-black);
 	box-sizing: border-box;
 	border: none;
 	border-bottom: 1px solid #898989;
@@ -58,8 +60,9 @@ header {
 
 .form-input span,
 .form-input i {
+	color: var(--lead-black);
 	position: absolute;
-	top: 32px;
+	top: 34px;
 }
 
 .form-input span {
@@ -75,16 +78,6 @@ header {
 	visibility: hidden;
 	position: absolute;
 	padding-top: 2px;
-	left: 0;
-}
-
-.form-input.success input {
-	border-color: #2ecc71;
-}
-
-.form-input.success i.fa-circle-check {
-	visibility: visible;
-	color: #2ecc71;
 }
 
 .form-input.error input {
@@ -104,7 +97,9 @@ header {
 
 .form-link span,
 .form-link a {
+	color: var(--lead-black);
 	font-size: 14px;
+	font-weight: 300;
 }
 
 .form-link a:hover {
@@ -112,11 +107,26 @@ header {
 	text-decoration: underline;
 }
 
+.form-button {
+	display: flex;
+	justify-content: space-between;
+}
+
 .form-button > input {
-	display: block;
-	width: 100%;
+	width: 48%;
 	font-size: 16px;
+	color: var(--eerie-black);
+	background: transparent;
+	border: 2px solid var(--eerie-black);
+	cursor: pointer;
+	padding: 10px;
 	margin: 15px 0;
+	transition: all 0.3s ease;
+}
+
+.form-button > input:hover {
+	background-color: var(--eerie-black);
+	color: white;
 }
 
 /* Media Buttons */
@@ -135,6 +145,7 @@ header {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: #fff;
+	color: var(--lead-black);
 	padding: 0 10px;
 }
 
@@ -145,7 +156,9 @@ header {
 }
 
 .media-options a {
+	color: var(--lead-black);
 	width: 45%;
+	height: 2.7rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
