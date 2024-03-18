@@ -1,6 +1,6 @@
 <?php 
     function detectError() {
-        global $username, $password;
+        global $username, $email, $password, $confirm;
 
         $error = array();
 
@@ -14,14 +14,29 @@
             $error["username"] = 'Username must contain only letters, numbers, dashes and underscore.';
         }
 
+        if ($email == null) {
+            $error["email"] = 'E-mail cannot be blank.';
+        }
+        else if (strlen($email) > 30) {
+            $error["email"] = 'E-mail must be less than 30 characters long.';
+        }
+        else if (!preg_match('/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/', $email)) {
+            $error["email"] = 'Invalid e-mail address';
+        }
+
         if ($password == null) {
             $error["password"] = 'Password cannot be blank.';
         }
         else if (strlen($password) < 8 || strlen($password) > 16) {
             $error["password"] = 'Password must be between 8 to 15 characters long.';
         }
-        else if (!preg_match('/^[a-zA-Z0-9!@#$%^&*]+$/', $password)) {
+        else if (!preg_match('/^[a-zA-Z0-9!@#$%^&*]$/', $password)) {
             $error["password"] = 'Password must contain only letters, numbers and symbols.';
+        }
+
+
+        if ($confirm == null || $confirm != $password) {
+            $error["confirm"] = 'Passwords does not match';
         }
 
         return $error;
@@ -53,31 +68,29 @@
 		<!-- Account Section -->
 		<section class="account-section">
 			<div class="forms-container">
-				<!-- Login Form -->
-				<div class="login-form">
-					<header>Login</header>
+				<!-- Signup Form -->
+				<div class="signup-form">
+					<header>Signup</header>
 
                     <?php 
                         if(!empty($_POST)) {
                             $username = trim($_POST['username']);
+                            $email = trim($_POST['email']);
                             $password = trim($_POST['password']);
+                            $confirm = trim($_POST['confirm']);
 
                             $error = detectError();
-
-                            if(empty($error) && $username == 'admin' && $password == 'admin1234') {
-                                header("location: index.php");
-
-                                $username = $password = null;
-                            }
                         }
                         else {
                             $username = '';
+                            $email = '';
                             $password = '';
+                            $confirm = '';
                         }
                     ?>
 
-					<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="login">
-                        <?php 
+					<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="signup">
+						<?php 
                             if (isset($error) && isset($error['username'])) {
                                 echo '<div class="form-input error">';
                             }
@@ -90,7 +103,23 @@
 							<input type="text" name="username" id="username" value="<?php echo $username ?>" placeholder="Enter username" />
 
 							<i class="fa-solid fa-circle-exclamation"></i>
-							<?php if(isset($error) && isset($error['username'])) printf('<small>%s</small>', $error['username']); ?>
+                            <?php if(isset($error) && isset($error['username'])) printf('<small>%s</small>', $error['username']); ?>
+						</div>
+
+						<?php 
+                            if (isset($error) && isset($error['email'])) {
+                                echo '<div class="form-input error">';
+                            }
+                            else {
+                                echo '<div class="form-input">';
+                            }
+                        ?>
+							<label for="email">Email</label>
+							<span class="fa-solid fa-at"></span>
+							<input type="text" name="email" id="email" value="<?php echo $email ?>" placeholder="Enter e-mail" />
+
+							<i class="fa-solid fa-circle-exclamation"></i>
+							<?php if(isset($error) && isset($error['email'])) printf('<small>%s</small>', $error['email']); ?>
 						</div>
 
 						<?php 
@@ -103,30 +132,42 @@
                         ?>
 							<label for="password">Password</label>
 							<span class="fa-solid fa-key"></span>
-							<input type="password" name="password" id="password" value="<?php echo $password ?>" placeholder="Enter password" />
+							<input type="password" name="password" id="password" value="<?php echo $password ?>" placeholder="Create password" />
 
 							<i class="fa-solid fa-circle-exclamation"></i>
 							<?php if(isset($error) && isset($error['password'])) printf('<small>%s</small>', $error['password']); ?>
 						</div>
 
-						<div class="form-link">
-							<a href="#" class="forgot-link">Forgot password?</a>
+						<?php 
+                            if (isset($error) && isset($error['confirm'])) {
+                                echo '<div class="form-input error">';
+                            }
+                            else {
+                                echo '<div class="form-input">';
+                            }
+                        ?>
+							<label for="confirm">Confirm Password</label>
+							<span class="fa-solid fa-key"></span>
+							<input type="password" name="confirm" id="confirm" value="<?php echo $confirm ?>" placeholder="Confirm password" />
+
+							<i class="fa-solid fa-circle-exclamation"></i>
+							<?php if(isset($error) && isset($error['confirm'])) printf('<small>%s</small>', $error['confirm']); ?>
 						</div>
 
 						<div class="form-button">
-							<input type="submit" name="submit" value="Login" />
+							<input type="submit" class="button" value="Signup" />
                             <input type="button" class="button" value="Reset" onclick="location='<?php echo $_SERVER["PHP_SELF"] ?>'">
 						</div>
 					</form>
 
 					<div class="form-link">
-						<span>Don't have an account? <a href="register.php">Signup</a></span>
+						<span>Already have an account? <a href="login.php">Login</a></span>
 					</div>
-				</div>
 
-				<?php 
+                    <?php 
                         require_once('includes/media-options.php');
-                ?>
+                    ?>
+				</div>
 			</div>
 		</section>
 	</body>

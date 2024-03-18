@@ -1,13 +1,95 @@
-@import url(https://fonts.bunny.net/css?family=montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i);
+/* reset.css */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
 
 * {
-	font-family: 'Montserrat', sans-serif;
-	color: var(--black);
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+
+html {
+	color-scheme: dark light;
+	scroll-padding-top: 2rem;
+	hanging-punctuation: first last;
+}
+
+body {
+	min-height: 100vh;
+	min-height: 100svh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+}
+
+p {
+	max-width: 75ch;
+	text-wrap: pretty;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+img,
+picture,
+svg,
+video {
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+	font-style: italic;
+	background-repeat: no-repeat;
+	background-size: cover;
+	shape-margin: 0.75rem;
+}
+
+blockquote,
+q {
+	quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	:has(:target) {
+		scroll-behavior: smooth;
+	}
+}
+
+/* style.css */
+
+* {
+	font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
 }
 
 :root {
-	--black: rgba(0, 0, 0, 0.85);
-	--box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	--lead-black: #222;
+	--eerie-black: #1b1b1b;
+	--box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 ::-webkit-scrollbar {
@@ -25,16 +107,8 @@
 	background-color: #758285;
 }
 
-/* Universal Styles */
-.container {
-	margin: 0 auto;
-	max-width: 1200px;
-	padding: 0 19px;
-}
-
-.section-header {
-	font-size: 2rem;
-	margin-bottom: 2rem;
+body {
+	background-color: var(--lead-black);
 }
 
 section[class$='section'] {
@@ -42,16 +116,12 @@ section[class$='section'] {
 }
 
 button {
-	padding: 10px 10px;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--eerie-black);
+	padding: 10px;
 	background: transparent;
-	border: 2px solid var(--black);
-	transition: all 0.3s ease-in;
-	color: var(--black);
-	font-weight: 500;
+	border: 2px solid var(--eerie-black);
 	cursor: pointer;
-}
-
-button:hover {
-	background-color: var(--black);
-	color: white;
+	transition: all 0.3s ease;
 }
