@@ -30,6 +30,7 @@
 				</a>
 			</div>
 			<div class="links">
+			    <a href="show.php">NOTIFICATIONS</a>
 				<a href="">Projects</a>
 				<a href="">Events</a>
 				<a href="about-us.php">About Us</a>

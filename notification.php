@@ -1,11 +1,51 @@
+<?php
+$PAGE_TITLE = 'Insert News'; 
+define('DB_HOST', 'localhost'); 
+define('DB_USER', 'root'); 
+define('DB_PASS', ''); 
+define('DB_NAME', 'atdata'); 
+
+if (!empty($_POST)) {
+
+    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    if ($con->connect_error) {
+        die("Connection failed: " . $con->connect_error);
+    }
+    
+    $id = strtoupper(trim($_POST['id']));
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
+    $publish_date = date('Y-m-d H:i:s'); 
+    
+    $sql = 'INSERT INTO news (id, title, content, publish_date) VALUES (?, ?, ?, ?)';
+
+    $stm = $con->prepare($sql);
+    $stm->bind_param('ssss', $id, $title, $content, $publish_date);
+    $stm->execute();
+
+    if ($stm->affected_rows > 0) {
+        echo '<div class="info">News inserted successfully.</div>';
+
+        $id = $title = $content = null;
+    } else {
+        echo '<div class="error">Error: Unable to insert news.</div>';
+    }
+
+    $stm->close();
+    $con->close();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>user management</title>
+    <title>ADD NOTIFICATIONS</title>
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -15,44 +55,37 @@
         <div class="grid-item">
             <a href="ttt.php">
                 <i class="far fa-user-circle"></i>
+            </a>
         </div>
-        <a href="admin.php">Home page</a>
-        <a href="#" class="toggle">manage </a>
+        <a href="admin.php">HOME PAGE</a>
+        <a href="#" class="toggle">MANAGE </a>
         <div class="subnav">
-            <a href="user management.php">user management</a>
-            <a href="#">manage 2</a>
+            <a href="user management.php">USER MANAGEMENT</a>
+            <a href="#">MANAGE 2</a>
         </div>
 
-        <a href="#">SETTING</a>
+        <a href="#">USER PAGE</a>
     </div>
 
     <!-- content -->
     <div class="main">
-        <div class="notification-container">
-            <?php
-            // example come form phpmyadmin
-            $notifications = array(
-                array("title" => "notify 1", "content" => "Here is the content of Notice 1。"),
-                array("title" => "notify 2", "content" => "Here is the content of Notice 2。"),
-                // more
-            );
+        <div class="container">
+            <h2>ADD NOTIFICATION</h2>
+            <form method="post" action="">
+                <label for="id">ID：</label><br>
+                <input type="text" id="id" name="id" style="text-transform: uppercase;"><br>
 
-            foreach ($notifications as $notification) {
-                echo "<div class='notification'>";
-                echo "<h3>" . $notification['title'] . "</h3>";
-                echo "<p>" . $notification['content'] . "</p>";
-                echo "</div>";
-            }
-            ?>
+                <label for="title">TITLE：</label><br>
+                <input type="text" id="title" name="title"><br>
+
+                <label for="content">CONTENT：</label><br>
+                <textarea id="content" name="content" rows="4"></textarea><br>
+
+                <input type="submit" value="SUBMIT">
+            </form>
         </div>
-
-        <form class="add-notification-form" method="post" action="add_notification.php">
-            <button class="add-notification" type="submit">add new notify</button>
-        </form>
-
     </div>
-
-    <script src="js/dashboard.js"></script>
 </body>
 
 </html>
+
