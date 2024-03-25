@@ -2,7 +2,7 @@
 $title = 'TAR UMT Robotics Club';
 $css = 'css/index.css';
 
-include('includes/header.php');
+include('includes/header-user.php');
 ?>
 
 <section class="hero-section">
