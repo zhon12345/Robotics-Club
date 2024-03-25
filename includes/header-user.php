@@ -30,9 +30,9 @@
 				</a>
 			</div>
 			<div class="links">
-			    <a href="show.php">NOTIFICATIONS</a>
-				<a href="">Projects</a>
+				<a href="news.php">Projects</a>
 				<a href="">Events</a>
+				<a href="news.php">News</a>
 				<a href="about-us.php">About Us</a>
 				<a href="login.php"><i class="fa-solid fa-user"></i></a>
 			</div>

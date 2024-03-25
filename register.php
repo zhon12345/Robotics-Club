@@ -42,7 +42,7 @@ function detectError()
 $title = 'Register';
 $css = 'css/login.css';
 
-include('includes/header.php');
+include('includes/header-user.php');
 require_once('includes/helper.php');
 ?>
 

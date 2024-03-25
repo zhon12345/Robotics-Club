@@ -1,33 +1,12 @@
-<!DOCTYPE html>
-<html>
+<?php
+$title = 'User Management';
+$css = 'css/users.css';
 
-<head>
-    <title>user management</title>
-    <link rel="stylesheet" href="css/admin.css">
-    <link rel="stylesheet" href="css/user.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
+include('includes/header-admin.php');
+?>
 
-<body>
-
-    <!--导航栏 -->
-    <div class="sidenav">
-        <div class="grid-item">
-            <a href="ttt.php">
-                <i class="far fa-user-circle"></i>
-        </div>
-        <a href="admin.php">Home page</a>
-        <a href="#" class="toggle">manage </a>
-        <div class="subnav">
-            <a href="user management.php">user management</a>
-            <a href="notification.php">notification</a>
-        </div>
-
-        <a href="#">SETTING</a>
-    </div>
-
-    <!-- content -->
-    <div class="main">
+<section class="main-section">
+    <div class="main-container">
         <div class="person-management">
             <h3>user management</h3>
             <?php
@@ -53,17 +32,17 @@
         </div>
         <div class="button-container">
             <div class="button">
-                <a href="#">add user</a>
+                <a href="#">Add user</a>
             </div>
             <div class="button">
-                <a href="#">remove user</a>
+                <a href="#">Remove user</a>
             </div>
             <div class="button">
-                <a href="#">other</a>
+                <a href="#">Others</a>
             </div>
         </div>
     </div>
-    <script src="js/dashboard.js"></script>
+</section>
 </body>
 
 </html>
