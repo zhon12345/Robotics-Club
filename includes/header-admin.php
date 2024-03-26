@@ -26,6 +26,7 @@
             </div>
             <div class="links">
                 <a href="">Projects</a>
+                <a href="add-news.php">Events</a>
                 <a href="add-news.php">News</a>
                 <a href="users.php">Users</a>
                 <a href="">Notification</a>
