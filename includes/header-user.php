@@ -34,7 +34,7 @@
 				<a href="">Events</a>
 				<a href="news.php">News</a>
 				<a href="about-us.php">About Us</a>
-				<a href="http://"><i class="fa-solid fa-bell"></i></a>
+				<a href="display-not.php"><i class="fa-solid fa-bell"></i></a>
 				<a href="login.php"><i class="fa-solid fa-user"></i></a>
 			</div>
 		</div>

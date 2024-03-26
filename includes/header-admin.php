@@ -29,7 +29,7 @@
                 <a href="add-news.php">Events</a>
                 <a href="add-news.php">News</a>
                 <a href="users.php">Users</a>
-                <a href="">Notification</a>
+                <a href="notification.php">Notification</a>
             </div>
             <div class="logout">
                 <a href="index.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
