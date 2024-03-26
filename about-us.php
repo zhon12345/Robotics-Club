@@ -9,7 +9,7 @@ include('includes/header-user.php');
 	<div class="grid-container">
 		<?php
 		$photos = array(
-			array("path" => "assets/about us/zx.jpeg", "text" => "Tan Zhi Xuan</br>Robotics Engineer"),
+			array("path" => "assets/about us/zx.jpg", "text" => "Tan Zhi Xuan</br>Robotics Engineer"),
 			array("path" => "assets/about us/zo.jpg", "text" => "Ng Zhun Onn</br>Software Developer"),
 			array("path" => "assets/about us/st.jpeg", "text" => "Lee Soon Teng</br>Mechanical Engineer"),
 			array("path" => "assets/about us/sj.jpeg", "text" => "Yap Sheng Jin</br>Robotics Researcher"),
