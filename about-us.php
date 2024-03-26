@@ -9,11 +9,8 @@ include('includes/header-user.php');
 	<div class="grid-container">
 		<?php
 		$photos = array(
-			array("path" => "assets/about us/zx.jpeg", "text" => "Tan Zhi Xuan</br>Robotics Engineer"),
-			array("path" => "assets/about us/zo.jpg", "text" => "Ng Zhun Onn</br>Software Developer"),
-			array("path" => "assets/about us/st.jpeg", "text" => "Lee Soon Teng</br>Mechanical Engineer"),
-			array("path" => "assets/about us/sj.jpeg", "text" => "Yap Sheng Jin</br>Robotics Researcher"),
-			array("path" => "assets/about us/yb.jpg", "text" => "Hoo Yean Bin</br>Technology Consultant"),
+			array("path" =>
+			"assets/about us/images (1).png", "text" => "NAME 1"), array("path" => "assets/about us/images (1).png", "text" => "NAME 2"), array("path" => "assets/about us/images (1).png", "text" => "NAME 3"), array("path" => "assets/about us/images (1).png", "text" => "NAME 4"), array("path" => "assets/about us/images (1).png", "text" => "NAME 5"),
 		);
 		foreach ($photos as $photo) { ?>
 			<div class="grid-item">
