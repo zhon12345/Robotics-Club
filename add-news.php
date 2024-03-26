@@ -40,7 +40,7 @@ if (!empty($_POST)) {
     <div class="main-container">
         <h2>ADD NOTIFICATION</h2>
         <form method="post" action="">
-            <label for="id">ID：</label><br>
+            <label for="id">DATE：</label><br>
             <input type="text" id="id" name="id" style="text-transform: uppercase;"><br>
 
             <label for="title">TITLE：</label><br>

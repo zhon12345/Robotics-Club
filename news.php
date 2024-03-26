@@ -19,7 +19,7 @@ $result = $con->query($sql);
     <div class="main-container">
         <table>
             <tr>
-                <th>ID</th>
+                <th>DATE</th>
                 <th>Title</th>
                 <th>Content</th>
             </tr>
