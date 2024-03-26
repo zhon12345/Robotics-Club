@@ -1,0 +1,9 @@
+.notification {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  width: calc(33.33% - 40px);
+  display: inline-block;
+  vertical-align: top;
+}
