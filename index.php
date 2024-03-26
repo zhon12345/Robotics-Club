@@ -12,6 +12,10 @@ include('includes/header-user.php');
 			<p>Explore the world of robotics with us and unleash your creativity!</p>
 		</div>
 	</div>
+	<div class="future">
+		<h1>Our club always priotize passion, creativity and innovation. Join our club today, you will be amazed.</h1>
+		<p></p>
+	</div>
 </section>
 </body>
 
