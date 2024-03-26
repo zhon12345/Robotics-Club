@@ -7,7 +7,7 @@
     <h1>notification</h1>
     <h2>Add a New Note</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        Title</TITLE>: <input type="text" name="subject"><br>
+        Title</TITLE>: <input type="text" name="title"><br>
         Content: <textarea name="content"></textarea><br>
         <input type="submit" value="Submit">
     </form>
@@ -26,10 +26,10 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $subject = $_POST['subject'];
+        $title = $_POST['title'];
         $content = $_POST['content'];
 
-        $sql = "INSERT INTO notification (subject, content) VALUES ('$subject', '$content')";
+        $sql = "INSERT INTO notification (title, content) VALUES ('$title', '$content')";
         if ($con->query($sql) === TRUE) {
             echo "Note added successfully.";
         } else {
@@ -42,7 +42,7 @@
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<p><strong>Title:</strong> " . $row["subject"] . "</p>";
+            echo "<p><strong>Title:</strong> " . $row["title"] . "</p>";
             echo "<p><strong>Time:</strong> " . $row["time"] . "</p>";
             echo "<p><strong>Content:</strong><br>" . $row["content"] . "</p>";
             echo "<hr>";
