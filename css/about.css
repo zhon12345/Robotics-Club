@@ -6,41 +6,25 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	position: relative;
 	width: 75%;
-	height: 75%;
-	text-align: center;
 	margin: auto;
 }
 
 .grid-item {
-	position: relative;
 	width: 25%;
 	margin: 10px;
 	border: 1px solid #ddd;
 	text-align: center;
-	overflow: hidden;
 }
 
 .grid-item img {
 	width: 100%;
-	height: auto;
-	display: block;
+	height: 250px;
 }
 
-.grid-item .text-container {
-	bottom: 0;
-	left: 0;
-	right: 0;
+.text-container {
+	color: var(--lead-black);
 	background-color: rgba(255, 255, 255, 0.8);
 	padding: 10px;
 	font-size: 20px;
-}
-
-.centered-text {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: white;
 }

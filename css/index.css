@@ -1,5 +1,6 @@
 .hero-section {
 	padding-top: 5rem !important;
+	padding-bottom: 0 !important;
 }
 
 .hero-container {
@@ -28,8 +29,4 @@
 
 .text-box p {
 	font-size: 20px;
-}
-
-.future h1 {
-    color: white;
 }

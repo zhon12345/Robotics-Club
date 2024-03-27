@@ -11,9 +11,9 @@ include('includes/header-user.php');
 		$photos = array(
 			array("path" => "assets/about us/zx.jpg", "text" => "Tan Zhi Xuan</br>Robotics Engineer"),
 			array("path" => "assets/about us/zo.jpg", "text" => "Ng Zhun Onn</br>Software Developer"),
-			array("path" => "assets/about us/st.jpeg", "text" => "Lee Soon Teng</br>Mechanical Engineer"),
 			array("path" => "assets/about us/sj.jpeg", "text" => "Yap Sheng Jin</br>Robotics Researcher"),
-			array("path" => "assets/about us/yb.jpg", "text" => "Hoo Yean Bin</br>Technology Consultant"),
+			array("path" => "assets/about us/st.jpeg", "text" => "Lee Soon Teng</br>Mechanical Engineer"),
+			array("path" => "assets/about us/yb.jpg", "text" => "Hoo Yean Bin</br>Robotics Engineer"),
 		);
 		foreach ($photos as $photo) { ?>
 			<div class="grid-item">
