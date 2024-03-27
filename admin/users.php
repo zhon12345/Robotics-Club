@@ -1,8 +1,8 @@
 <?php
 $title = 'User Management';
-$css = 'css/users.css';
+$css = '../css/admin/users.css';
 
-include('includes/header-admin.php');
+include('../includes/header-admin.php');
 ?>
 
 <section class="main-section">

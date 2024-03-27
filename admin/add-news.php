@@ -1,8 +1,8 @@
 <?php
 $title = 'News Management';
 
-include('includes/header-admin.php');
-require_once('includes/helper.php');
+include('../includes/header-admin.php');
+require_once('../includes/helper.php');
 
 if (!empty($_POST)) {
 

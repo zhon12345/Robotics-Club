@@ -1,6 +1,6 @@
 <?php
 $title = 'About Us';
-$css = 'css/about.css';
+$css = 'css/website/about.css';
 
 include('includes/header.php');
 ?>

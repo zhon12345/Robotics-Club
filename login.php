@@ -25,7 +25,7 @@ function detectError()
 }
 
 $title = 'Login';
-$css = 'css/login.css';
+$css = 'css/website/login.css';
 
 include('includes/header.php');
 require_once('includes/helper.php');
@@ -46,7 +46,7 @@ require_once('includes/helper.php');
 				$error = detectError();
 
 				if (empty($error) && $username == ADMIN_USER && $password == ADMIN_PASS) {
-					header("location: admin.php");
+					header("location: admin/admin.php");
 
 					$username = $password = null;
 				}

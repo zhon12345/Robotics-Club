@@ -4,7 +4,7 @@
 }
 
 .hero-container {
-	background-image: url('../assets/background.jpg');
+	background-image: url('../../assets/background.jpg');
 	background-size: cover;
 	height: 650px;
 	display: flex;
