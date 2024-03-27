@@ -1,7 +1,7 @@
 <?php
 $title = 'Admin Panel';
 
-include('includes/header-admin.php');
+include('../includes/header-admin.php');
 ?>
 
 <!-- content -->

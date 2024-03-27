@@ -9,7 +9,7 @@
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="css/navbar.css" />
+	<link rel="stylesheet" href="css/website/navbar.css" />
 	<link rel="stylesheet" href="<?php echo $css ?>" />
 
 	<!-- Font Awesome -->
@@ -30,7 +30,6 @@
 				</a>
 			</div>
 			<div class="links">
-				<a href="news.php">Projects</a>
 				<a href="">Events</a>
 				<a href="news.php">News</a>
 				<a href="about-us.php">About Us</a>

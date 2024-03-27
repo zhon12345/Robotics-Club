@@ -1,6 +1,6 @@
 <?php
 $title = 'TAR UMT Robotics Club';
-$css = 'css/index.css';
+$css = 'css/website/index.css';
 
 include('includes/header.php');
 ?>

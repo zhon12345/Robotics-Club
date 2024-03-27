@@ -1,4 +1,4 @@
-<?php require_once('includes/helper.php') ?>
+<?php require_once('../includes/helper.php') ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +10,8 @@
     <title><?php echo $title ?></title>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/admin/admin.css">
     <link rel="stylesheet" href="<?php echo $css ?>" />
 
     <!-- Font Awesome -->
@@ -25,14 +25,13 @@
                 <a href="admin.php"><i class="fa-solid fa-user"></i><?php echo ADMIN_USER ?></a>
             </div>
             <div class="links">
-                <a href="">Projects</a>
-                <a href="add-news.php">Events</a>
+                <a href="">Events</a>
                 <a href="add-news.php">News</a>
                 <a href="users.php">Users</a>
                 <a href="notification.php">Notification</a>
             </div>
             <div class="logout">
-                <a href="index.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                <a href="../index.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
             </div>
         </div>
     </div>
