@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>notification</title>
-    <link rel="stylesheet" type="text/css" href="css\notification.css">
-</head>
-<body>
-    <h1>notification</h1>
+<?php 
+$css = 'css/notification.css';
 
-    <hr>
+include('includes/header.php');
+require_once('includes/helper.php')
+?>
 
     <section class="main-section">
         <div class="main-container">
             <?php
-            include('includes/header-user.php');
-
-            define('DB_HOST', 'localhost');
-            define('DB_USER', 'root');
-            define('DB_PASS', '');
-            define('DB_NAME', 'notification');
 
             $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
             if ($con->connect_error) {
