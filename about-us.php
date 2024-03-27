@@ -2,7 +2,7 @@
 $title = 'About Us';
 $css = 'css/about.css';
 
-include('includes/header-user.php');
+include('includes/header.php');
 ?>
 
 <section class="about-section">

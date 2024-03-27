@@ -2,7 +2,7 @@
 $title = 'News';
 $css = 'css/news.css';
 
-include('includes/header-user.php');
+include('includes/header.php');
 require_once('includes/helper.php');
 
 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
