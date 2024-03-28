@@ -1,8 +1,8 @@
 <?php 
 $css = 'css/notification.css';
 
-include('includes/header.php');
-require_once('includes/helper.php')
+include('includes\header.php');
+require_once('includes\helper.php')
 ?>
 
     <section class="main-section">

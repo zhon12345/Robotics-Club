@@ -1,6 +1,6 @@
 <?php
 $title = 'News';
-$css = 'css/news.css';
+$css = 'css\website\news.css';
 
 include('includes/header.php');
 require_once('includes/helper.php');
@@ -17,32 +17,65 @@ $result = $con->query($sql);
 
 <section class="main-section">
     <div class="main-container">
-        <table>
-            <tr>
-                <th>DATE</th>
-                <th>Title</th>
-                <th>Content</th>
-            </tr>
-            <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row["id"] . "</td>";
-                    echo "<td>" . htmlspecialchars($row["title"]) . "</td>";
-                    echo "<td>" . $row["content"] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>0 results</td></tr>";
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='news-item'>";
+                echo "<div class='news-photo'>";
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($row["photo"]) . '" />';
+                echo "</div>";
+                echo "<div class='news-details'>";
+                echo "<div class='news-date'>" . $row["date"] . "</div>";
+                echo "<div class='news-title'>" . htmlspecialchars($row["title"]) . "</div>";
+                echo "<div class='news-content' style='display: none;'>" . $row["content"] . "</div>";
+                echo "<div class='more' onclick='toggleContent(this)'>More</div>";
+                echo "</div>"; 
+                echo "</div>"; 
             }
-            ?>
-        </table>
+        } else {
+            echo "<div class='no-results'>0 results</div>";
+        }
+        ?>
     </div>
 </section>
-</body>
 
+</body>
 </html>
 
 <?php
 $con->close();
 ?>
+<script>
+    function toggleContent(element) {
+        var newsItem = element.closest('.news-item');
+        var content = newsItem.querySelector('.news-content');
+
+        if (content.style.display === 'none' || content.style.display === '') {
+            content.style.display = 'block';
+            element.textContent = 'Less';
+            newsItem.classList.add('enlarge');
+
+            document.addEventListener('click', closeEnlargedItem);
+        } else {
+            content.style.display = 'none';
+            element.textContent = 'More';
+            newsItem.classList.remove('enlarge');
+
+            document.removeEventListener('click', closeEnlargedItem);
+        }
+    }
+    
+    function closeEnlargedItem(event) {
+        var enlargedItem = document.querySelector('.enlarge');
+
+        if (!enlargedItem.contains(event.target)) {
+            var content = enlargedItem.querySelector('.news-content');
+            var moreButton = enlargedItem.querySelector('.more');
+            content.style.display = 'none';
+            moreButton.textContent = 'More';
+            enlargedItem.classList.remove('enlarge');
+            document.removeEventListener('click', closeEnlargedItem);
+        }
+    }
+</script>
+
