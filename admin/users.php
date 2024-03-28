@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['admin'])) {
+    header("location: ../login.php");
+    exit();
+}
+
 $title = 'User Management';
 $css = '../css/admin/users.css';
 

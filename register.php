@@ -1,47 +1,6 @@
 <?php
-function detectError()
-{
-    global $username, $email, $password, $confirm;
-
-    $error = array();
-
-    if ($username == null) {
-        $error["username"] = 'Username cannot be blank';
-    } else if (strlen($username) < 3 || strlen($username) > 30) {
-        $error["username"] = 'Username must be between 3 to 30 characters long.';
-    } else if (!preg_match('/^[a-zA-Z0-9_-]+$/', $username)) {
-        $error["username"] = 'Username must contain only letters, numbers, dashes and underscore.';
-    }
-
-    if ($email == null) {
-        $error["email"] = 'E-mail cannot be blank.';
-    } else if (strlen($email) > 30) {
-        $error["email"] = 'E-mail must be less than 30 characters long.';
-    } else if (!preg_match('/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/', $email)) {
-        $error["email"] = 'Invalid e-mail address';
-    }
-
-    if ($password == null) {
-        $error["password"] = 'Password cannot be blank.';
-    } else if (strlen($password) < 8 || strlen($password) > 16) {
-        $error["password"] = 'Password must be between 8 to 15 characters long.';
-    } else if (!preg_match('/^[a-zA-Z0-9!@#$%^&*]$/', $password)) {
-        $error["password"] = 'Password must contain only letters, numbers and symbols.';
-    }
-
-
-    if ($confirm == null || $confirm != $password) {
-        $error["confirm"] = 'Passwords does not match';
-    }
-
-    return $error;
-}
-?>
-
-<?php
 $title = 'Register';
 $css = 'css/website/login.css';
-
 include('includes/header.php');
 require_once('includes/helper.php');
 ?>
@@ -60,7 +19,35 @@ require_once('includes/helper.php');
                 $password = trim($_POST['password']);
                 $confirm = trim($_POST['confirm']);
 
-                $error = detectError();
+                $error['username'] = validateUsername($username);
+                $error['email'] = validateEmail($email);
+                $error['password'] = validatePassword($password);
+                $error['confirm'] = validateConfirm($password, $confirm);
+
+                $error = array_filter($error);
+
+                if (empty($error)) {
+                    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    $sql = 'INSERT INTO user (username, email, password) VALUES (?, ?, ?)';
+
+                    $stm = $con->prepare($sql);
+
+                    $password = password_hash($password, PASSWORD_DEFAULT);
+
+                    $stm->bind_param('sss', $username, $email, $password);
+
+                    $stm->execute();
+
+                    if ($stm->affected_rows > 0) {
+                        $_POST = array();
+                        $username = $email = $password = $confirm = null;
+                    } else {
+                    }
+
+                    $stm->close();
+                    $con->close();
+                }
             } else {
                 $username = '';
                 $email = '';
@@ -70,80 +57,60 @@ require_once('includes/helper.php');
             ?>
 
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="signup">
-                <?php
-                if (isset($error) && isset($error['username'])) {
-                    echo '<div class="form-input error">';
-                } else {
-                    echo '<div class="form-input">';
-                }
-                ?>
-                <label for="username">Username</label>
-                <span class="fa-solid fa-user"></span>
-                <input type="text" name="username" id="username" value="<?php echo $username ?>" placeholder="Enter username" />
+                <div class="form-input <?php echo isset($error) && isset($error['username']) ? 'error' : (!empty($_POST) && !isset($error['username']) ? 'success' : '') ?> ">
+                    <label for="username">Username</label>
+                    <span class="fa-solid fa-user"></span>
+                    <input type="text" name="username" id="username" value="<?php echo $username ?>" placeholder="Enter username" />
 
-                <i class="fa-solid fa-circle-exclamation"></i>
-                <?php if (isset($error) && isset($error['username'])) printf('<small>%s</small>', $error['username']); ?>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <?php if (isset($error) && isset($error['username'])) printf('<small>%s</small>', $error['username']); ?>
+                </div>
+
+                <div class="form-input <?php echo isset($error) && isset($error['email']) ? 'error' : (!empty($_POST) && !isset($error['email']) ? 'success' : '') ?> ">
+                    <label for="email">Email</label>
+                    <span class="fa-solid fa-at"></span>
+                    <input type="text" name="email" id="email" value="<?php echo $email ?>" placeholder="Enter e-mail" />
+
+                    <i class="fa-solid fa-circle-check"></i>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <?php if (isset($error) && isset($error['email'])) printf('<small>%s</small>', $error['email']); ?>
+                </div>
+
+                <div class="form-input <?php echo isset($error) && isset($error['password']) ? 'error' : (!empty($_POST) && !isset($error['password']) ? 'success' : '') ?> ">
+                    <label for="password">Password</label>
+                    <span class="fa-solid fa-key"></span>
+                    <input type="password" name="password" id="password" value="<?php echo $password ?>" placeholder="Create password" />
+
+                    <i class="fa-solid fa-circle-check"></i>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <?php if (isset($error) && isset($error['password'])) printf('<small>%s</small>', $error['password']); ?>
+                </div>
+
+                <div class="form-input <?php echo isset($error) && isset($error['confirm']) ? 'error' : (!empty($_POST) && !isset($error['confirm']) ? 'success' : '') ?> ">
+                    <label for="confirm">Confirm Password</label>
+                    <span class="fa-solid fa-key"></span>
+                    <input type="password" name="confirm" id="confirm" value="<?php echo $confirm ?>" placeholder="Confirm password" />
+
+                    <i class="fa-solid fa-circle-check"></i>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <?php if (isset($error) && isset($error['confirm'])) printf('<small>%s</small>', $error['confirm']); ?>
+                </div>
+
+                <div class="form-button">
+                    <input type="submit" class="button" value="Signup" />
+                    <input type="button" class="button" value="Reset" onclick="location='<?php echo $_SERVER["PHP_SELF"] ?>'">
+                </div>
+            </form>
+
+            <div class="form-link">
+                <span>Already have an account? <a href="login.php">Login</a></span>
+            </div>
+
+            <?php
+            include('includes/media-options.php');
+            ?>
         </div>
-
-        <?php
-        if (isset($error) && isset($error['email'])) {
-            echo '<div class="form-input error">';
-        } else {
-            echo '<div class="form-input">';
-        }
-        ?>
-        <label for="email">Email</label>
-        <span class="fa-solid fa-at"></span>
-        <input type="text" name="email" id="email" value="<?php echo $email ?>" placeholder="Enter e-mail" />
-
-        <i class="fa-solid fa-circle-exclamation"></i>
-        <?php if (isset($error) && isset($error['email'])) printf('<small>%s</small>', $error['email']); ?>
-    </div>
-
-    <?php
-    if (isset($error) && isset($error['password'])) {
-        echo '<div class="form-input error">';
-    } else {
-        echo '<div class="form-input">';
-    }
-    ?>
-    <label for="password">Password</label>
-    <span class="fa-solid fa-key"></span>
-    <input type="password" name="password" id="password" value="<?php echo $password ?>" placeholder="Create password" />
-
-    <i class="fa-solid fa-circle-exclamation"></i>
-    <?php if (isset($error) && isset($error['password'])) printf('<small>%s</small>', $error['password']); ?>
-    </div>
-
-    <?php
-    if (isset($error) && isset($error['confirm'])) {
-        echo '<div class="form-input error">';
-    } else {
-        echo '<div class="form-input">';
-    }
-    ?>
-    <label for="confirm">Confirm Password</label>
-    <span class="fa-solid fa-key"></span>
-    <input type="password" name="confirm" id="confirm" value="<?php echo $confirm ?>" placeholder="Confirm password" />
-
-    <i class="fa-solid fa-circle-exclamation"></i>
-    <?php if (isset($error) && isset($error['confirm'])) printf('<small>%s</small>', $error['confirm']); ?>
-    </div>
-
-    <div class="form-button">
-        <input type="submit" class="button" value="Signup" />
-        <input type="button" class="button" value="Reset" onclick="location='<?php echo $_SERVER["PHP_SELF"] ?>'">
-    </div>
-    </form>
-
-    <div class="form-link">
-        <span>Already have an account? <a href="login.php">Login</a></span>
-    </div>
-
-    <?php
-    include('includes/media-options.php');
-    ?>
-    </div>
     </div>
 </section>
 </body>

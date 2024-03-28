@@ -1,27 +1,12 @@
 <?php
-function detectError()
-{
-	global $username, $password;
+session_start();
 
-	$error = array();
-
-	if ($username == null) {
-		$error["username"] = 'Username cannot be blank';
-	} else if (strlen($username) < 3 || strlen($username) > 30) {
-		$error["username"] = 'Username must be between 3 to 30 characters long.';
-	} else if (!preg_match('/^[a-zA-Z0-9_-]+$/', $username)) {
-		$error["username"] = 'Username must contain only letters, numbers, dashes and underscore.';
-	}
-
-	if ($password == null) {
-		$error["password"] = 'Password cannot be blank.';
-	} else if (strlen($password) < 8 || strlen($password) > 16) {
-		$error["password"] = 'Password must be between 8 to 15 characters long.';
-	} else if (!preg_match('/^[a-zA-Z0-9!@#$%^&*]+$/', $password)) {
-		$error["password"] = 'Password must contain only letters, numbers and symbols.';
-	}
-
-	return $error;
+if (isset($_SESSION['user'])) {
+	header("location: user/dashboard.php");
+	exit();
+} else if (isset($_SESSION['admin'])) {
+	header("location: admin/dashboard.php");
+	exit();
 }
 
 $title = 'Login';
@@ -43,12 +28,49 @@ require_once('includes/helper.php');
 				$username = trim($_POST['username']);
 				$password = trim($_POST['password']);
 
-				$error = detectError();
-
-				if (empty($error) && $username == ADMIN_USER && $password == ADMIN_PASS) {
-					header("location: admin/admin.php");
+				if ($username == ADMIN_USER && $password == ADMIN_PASS) {
+					$_SESSION['admin'] = $username;
 
 					$username = $password = null;
+
+					header("location: admin/dashboard.php");
+					exit();
+				} else {
+					$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+					$username  = $con->real_escape_string($username);
+					$sql = "SELECT username, password FROM user WHERE username = ?";
+
+					$stm = $con->prepare($sql);
+
+					$stm->bind_param('s', $username);
+
+					$stm->execute();
+					$stm->store_result();
+
+					if ($stm->num_rows > 0) {
+						$stm->bind_result($username, $hashed_password);
+
+						$stm->fetch();
+
+						if (password_verify($password, $hashed_password)) {
+							$_SESSION['user'] = $username;
+
+							$username = $password = null;
+
+							header("location: user/dashboard.php");
+							exit();
+						} else {
+							$error['password'] = 'Invalid password.';
+						}
+					} else {
+						$error['username'] = 'Invalid Username';
+					}
+
+					$stm->close();
+					$con->close();
+
+					$error = array_filter($error);
 				}
 			} else {
 				$username = '';
@@ -57,54 +79,43 @@ require_once('includes/helper.php');
 			?>
 
 			<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="login">
-				<?php
-				if (isset($error) && isset($error['username'])) {
-					echo '<div class="form-input error">';
-				} else {
-					echo '<div class="form-input">';
-				}
-				?>
-				<label for="username">Username</label>
-				<span class="fa-solid fa-user"></span>
-				<input type="text" name="username" id="username" value="<?php echo $username ?>" placeholder="Enter username" />
+				<div class="form-input <?php echo isset($error) && isset($error['username']) ? 'error' : (!empty($_POST) && !isset($error['username']) ? 'success' : '') ?> ">
+					<label for="username">Username</label>
+					<span class="fa-solid fa-user"></span>
+					<input type="text" name="username" id="username" value="<?php echo $username ?>" placeholder="Enter username" />
 
-				<i class="fa-solid fa-circle-exclamation"></i>
-				<?php if (isset($error) && isset($error['username'])) printf('<small>%s</small>', $error['username']); ?>
+					<i class="fa-solid fa-circle-check"></i>
+					<i class="fa-solid fa-circle-exclamation"></i>
+					<?php if (isset($error) && isset($error['username'])) printf('<small>%s</small>', $error['username']); ?>
+				</div>
+
+				<div class="form-input <?php echo isset($error) && isset($error['password']) ? 'error' : '' ?> ">
+					<label for="password">Password</label>
+					<span class="fa-solid fa-key"></span>
+					<input type="password" name="password" id="password" value="<?php echo $password ?>" placeholder="Enter password" />
+
+					<i class="fa-solid fa-circle-exclamation"></i>
+					<?php if (isset($error) && isset($error['password'])) printf('<small>%s</small>', $error['password']); ?>
+				</div>
+
+				<div class="form-link">
+					<a href="#" class="forgot-link">Forgot password?</a>
+				</div>
+
+				<div class="form-button">
+					<input type="submit" name="submit" value="Login" />
+					<input type="button" class="button" value="Reset" onclick="location='<?php echo $_SERVER["PHP_SELF"] ?>'">
+				</div>
+			</form>
+
+			<div class="form-link">
+				<span>Don't have an account? <a href="register.php">Signup</a></span>
+			</div>
 		</div>
 
 		<?php
-		if (isset($error) && isset($error['password'])) {
-			echo '<div class="form-input error">';
-		} else {
-			echo '<div class="form-input">';
-		}
+		include('includes/media-options.php');
 		?>
-		<label for="password">Password</label>
-		<span class="fa-solid fa-key"></span>
-		<input type="password" name="password" id="password" value="<?php echo $password ?>" placeholder="Enter password" />
-
-		<i class="fa-solid fa-circle-exclamation"></i>
-		<?php if (isset($error) && isset($error['password'])) printf('<small>%s</small>', $error['password']); ?>
-	</div>
-
-	<div class="form-link">
-		<a href="#" class="forgot-link">Forgot password?</a>
-	</div>
-
-	<div class="form-button">
-		<input type="submit" name="submit" value="Login" />
-		<input type="button" class="button" value="Reset" onclick="location='<?php echo $_SERVER["PHP_SELF"] ?>'">
-	</div>
-	</form>
-
-	<div class="form-link">
-		<span>Don't have an account? <a href="register.php">Signup</a></span>
-	</div>
-	</div>
-
-	<?php
-	include('includes/media-options.php');
-	?>
 	</div>
 </section>
 </body>
