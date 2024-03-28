@@ -1,6 +1,6 @@
 <?php
 $title = 'News';
-$css = 'css\website\news.css';
+$css = 'css/website/news.css';
 
 include('includes/header.php');
 require_once('includes/helper.php');
@@ -29,8 +29,8 @@ $result = $con->query($sql);
                 echo "<div class='news-title'>" . htmlspecialchars($row["title"]) . "</div>";
                 echo "<div class='news-content' style='display: none;'>" . $row["content"] . "</div>";
                 echo "<div class='more' onclick='toggleContent(this)'>More</div>";
-                echo "</div>"; 
-                echo "</div>"; 
+                echo "</div>";
+                echo "</div>";
             }
         } else {
             echo "<div class='no-results'>0 results</div>";
@@ -39,43 +39,11 @@ $result = $con->query($sql);
     </div>
 </section>
 
+<script src="js/script.js"></script>
 </body>
+
 </html>
 
 <?php
 $con->close();
 ?>
-<script>
-    function toggleContent(element) {
-        var newsItem = element.closest('.news-item');
-        var content = newsItem.querySelector('.news-content');
-
-        if (content.style.display === 'none' || content.style.display === '') {
-            content.style.display = 'block';
-            element.textContent = 'Less';
-            newsItem.classList.add('enlarge');
-
-            document.addEventListener('click', closeEnlargedItem);
-        } else {
-            content.style.display = 'none';
-            element.textContent = 'More';
-            newsItem.classList.remove('enlarge');
-
-            document.removeEventListener('click', closeEnlargedItem);
-        }
-    }
-    
-    function closeEnlargedItem(event) {
-        var enlargedItem = document.querySelector('.enlarge');
-
-        if (!enlargedItem.contains(event.target)) {
-            var content = enlargedItem.querySelector('.news-content');
-            var moreButton = enlargedItem.querySelector('.more');
-            content.style.display = 'none';
-            moreButton.textContent = 'More';
-            enlargedItem.classList.remove('enlarge');
-            document.removeEventListener('click', closeEnlargedItem);
-        }
-    }
-</script>
-
