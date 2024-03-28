@@ -22,7 +22,7 @@
     <div class="sidenav">
         <div class="container">
             <div class="logo">
-                <a href="admin.php"><i class="fa-solid fa-user"></i><?php echo ADMIN_USER ?></a>
+                <a href="dashboard.php"><i class="fa-solid fa-user"></i><?php echo ADMIN_USER ?></a>
             </div>
             <div class="links">
                 <a href="">Events</a>
@@ -31,7 +31,7 @@
                 <a href="notification.php">Notification</a>
             </div>
             <div class="logout">
-                <a href="../index.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                <a href="../logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
             </div>
         </div>
     </div>
