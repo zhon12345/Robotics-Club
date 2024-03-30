@@ -30,7 +30,7 @@
 				</a>
 			</div>
 			<div class="links">
-				<a href="">Events</a>
+				<a href="event.php">Events</a>
 				<a href="news.php">News</a>
 				<a href="about-us.php">About Us</a>
 				<a href="login.php"><i class="fa-solid fa-user"></i></a>
