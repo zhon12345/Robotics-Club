@@ -46,7 +46,7 @@ a {
 /* content */
 
 .main-section {
-	min-height: 100vh;
+	height: 100vh;
 	margin-left: 15rem;
 	display: flex;
 	align-items: center;
@@ -59,7 +59,7 @@ a {
 
 h2 {
 	font-weight: 300;
-	margin-bottom: 3rem;
+	margin-bottom: 3.5rem;
 }
 
 .grid {

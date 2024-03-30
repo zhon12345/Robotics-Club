@@ -25,8 +25,8 @@
                 <a href="dashboard.php"><i class="fa-solid fa-user"></i><?php echo ADMIN_USER ?></a>
             </div>
             <div class="links">
-                <a href="events.php">Events</a>
-                <a href="news.php">News</a>
+                <a href="">Events</a>
+                <a href="add-news.php">News</a>
                 <a href="users.php">Users</a>
                 <a href="notification.php">Notification</a>
             </div>
