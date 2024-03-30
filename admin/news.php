@@ -52,9 +52,12 @@ if (isset($_POST['delete_id'])) {
         die("Connection failed: " . $con->connect_error);
     }
     $delete_query = "DELETE FROM news WHERE id = ?";
+
     $stm_delete = $con->prepare($delete_query);
+
     $stm_delete->bind_param('s', $delete_id);
     $stm_delete->execute();
+
     $stm_delete->close();
     $con->close();
 }

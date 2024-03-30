@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 
-$title = 'Admin Panel';
+$title = 'Admin Dashboard';
 
 include('../includes/header-admin.php');
 ?>
