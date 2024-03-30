@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
-    $time = $_POST['time'];
+    $date = $_POST['date'];
 
-    $sql = "INSERT INTO notification (id, title, content, time) VALUES ('$id', '$title', '$content', '$time')";
+    $sql = "INSERT INTO notification (title, content, date) VALUES ('$title', '$content', '$date')";
     if ($con->query($sql) === TRUE) {
         echo "notification added successfully. ID: $id";
     } else {
@@ -38,21 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             Title: <input type="text" name="title"><br>
             Content: <textarea name="content"></textarea><br>
-            Time: <input type="text" name="time"><br>
             <input type="submit" value="Submit">
         </form>
 
         <hr>
 
         <?php
-        $sql = "SELECT * FROM notification ORDER BY time DESC";
+        $sql = "SELECT * FROM notification ORDER BY date DESC";
         $result = $con->query($sql);
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<p><strong>ID:</strong> " . $row["id"] . "</p>";
+                echo "<p><strong>Date:</strong> " . $row["date"] . "</p>";
                 echo "<p><strong>Title:</strong> " . $row["title"] . "</p>";
-                echo "<p><strong>Time:</strong> " . $row["time"] . "</p>";
                 echo "<p><strong>Content:</strong><br>" . $row["content"] . "</p>";
                 echo "<hr>";
             }

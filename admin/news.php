@@ -17,26 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id = strtoupper(trim($_POST['id']));
         $title = trim($_POST['title']);
         $content = trim($_POST['content']);
-        $photoData = null;
-
-        if (isset($_FILES["photo"]["tmp_name"]) && $_FILES["photo"]["error"] === UPLOAD_ERR_OK) {
-            $photo = $_FILES["photo"]["tmp_name"];
-            $photoData = addslashes(file_get_contents($photo));
-        }
 
         $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         if ($con->connect_error) {
             die("Connection failed: " . $con->connect_error);
         }
 
-        $sql = 'INSERT INTO news (id, title, content, photo) VALUES (?, ?, ?, ?)';
+        $sql = 'INSERT INTO news (title, content) VALUES (?, ?)';
         $stm = $con->prepare($sql);
-        $stm->bind_param('ssss', $id, $title, $content, $photoData);
+        $stm->bind_param('ss', $title, $content);
         $stm->execute();
 
         if ($stm->affected_rows > 0) {
             echo '<div class="info">News inserted successfully.</div>';
-            header("Location: add-news.php");
+            header("Location: news.php");
             exit();
         } else {
             echo '<div class="error">Error: Unable to insert news.</div>';
@@ -56,9 +50,12 @@ if (isset($_POST['delete_id'])) {
         die("Connection failed: " . $con->connect_error);
     }
     $delete_query = "DELETE FROM news WHERE id = ?";
+
     $stm_delete = $con->prepare($delete_query);
+
     $stm_delete->bind_param('s', $delete_id);
     $stm_delete->execute();
+
     $stm_delete->close();
     $con->close();
 }
@@ -78,9 +75,6 @@ $result = $con->query("SELECT id, content FROM news");
             <input type="text" id="title" name="title" style="font-size: 20px;"><br>
             <label for="content">CONTENT：</label><br>
             <textarea id="content" name="content" rows="4" style="width: 1044px; height: 318px; font-size: 20px;"></textarea><br>
-
-            <label for="photo">PHOTO：</label><br>
-            <input type="file" id="photo" name="photo" style="margin-bottom: 10px; width: 200px;"><br>
 
             <div>
                 <input type="submit" value="SUBMIT" style="margin-right: 10px; width: 150px; height: 40px;">
