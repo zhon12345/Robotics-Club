@@ -7,6 +7,8 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $title = 'News Management';
+$css = '../css/admin/news.css';
+
 include('../includes/header-admin.php');
 require_once('../includes/helper.php');
 
@@ -70,10 +72,8 @@ $result = $con->query("SELECT id, content FROM news");
 
 <section class="main-section">
     <div class="main-container">
-        <h2 style="margin-top: 6rem;">ADD NOTIFICATION</h2>
+        <h2>ADD NOTIFICATION</h2>
         <form method="post" action="" enctype="multipart/form-data">
-            <label for="id">ID：</label><br>
-            <input type="text" id="id" name="id" style="text-transform: uppercase; font-size: 20px;"><br>
             <label for="title">TITLE：</label><br>
             <input type="text" id="title" name="title" style="font-size: 20px;"><br>
             <label for="content">CONTENT：</label><br>
