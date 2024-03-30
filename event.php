@@ -1,6 +1,6 @@
 <?php
-$title = 'News';
-$css = 'css/website/news.css';
+$title = 'Event';
+$css = 'css/website/event.css';
 
 include('includes/header.php');
 require_once('includes/helper.php');
@@ -10,7 +10,7 @@ if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 
-$sql = "SELECT * FROM news";
+$sql = "SELECT * FROM event";
 $result = $con->query($sql);
 
 ?>
@@ -20,11 +20,11 @@ $result = $con->query($sql);
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<div class='news-item'>";
-                echo "<div class='news-details'>";
-                echo "<div class='news-date'>" . date("Y-m-d", strtotime($row["date"])) . "</div>";
-                echo "<div class='news-title'>" . htmlspecialchars($row["title"]) . "</div>";
-                echo "<div class='news-content' style='display: none;'>" . $row["content"] . "</div>";
+                echo "<div class='event-item'>";
+                echo "<div class='event-details'>";
+                echo "<div class='event-date'>" . date("Y-m-d", strtotime($row["date"])) . "</div>";
+                echo "<div class='event-title'>" . htmlspecialchars($row["title"]) . "</div>";
+                echo "<div class='event-content' style='display: none;'>" . $row["content"] . "</div>";
                 echo "<div class='more' onclick='toggleContent(this)'>More</div>";
                 echo "</div>";
                 echo "</div>";
@@ -36,7 +36,7 @@ $result = $con->query($sql);
     </div>
 </section>
 
-<script src="js/script.js"></script>
+<script src="js\events.js"></script>
 </body>
 
 </html>

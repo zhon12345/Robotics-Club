@@ -12,40 +12,36 @@ $css = '../css/admin/news.css';
 include('../includes/header-admin.php');
 require_once('../includes/helper.php');
 
+$error_message = '';
+$success_message = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!empty($_POST['id']) && !empty($_POST['title']) && !empty($_POST['content'])) {
-        $id = strtoupper(trim($_POST['id']));
+    if (!empty($_POST['title']) && !empty($_POST['content'])) {
         $title = trim($_POST['title']);
         $content = trim($_POST['content']);
-        $photoData = null;
-
-        if (isset($_FILES["photo"]["tmp_name"]) && $_FILES["photo"]["error"] === UPLOAD_ERR_OK) {
-            $photo = $_FILES["photo"]["tmp_name"];
-            $photoData = addslashes(file_get_contents($photo));
-        }
 
         $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         if ($con->connect_error) {
             die("Connection failed: " . $con->connect_error);
         }
 
-        $sql = 'INSERT INTO news (id, title, content, photo) VALUES (?, ?, ?, ?)';
+        $sql = 'INSERT INTO news (title, content) VALUES (?, ?)';
         $stm = $con->prepare($sql);
-        $stm->bind_param('ssss', $id, $title, $content, $photoData);
+        $stm->bind_param('ss', $title, $content);
         $stm->execute();
 
         if ($stm->affected_rows > 0) {
-            echo '<div class="info">News inserted successfully.</div>';
-            header("Location: add-news.php");
+            $success_message = 'News inserted successfully.';
+            header("Location: ./news.php");
             exit();
         } else {
-            echo '<div class="error">Error: Unable to insert news.</div>';
+            $error_message = 'Error: Unable to insert news.';
         }
 
         $stm->close();
         $con->close();
     } else {
-        echo '<div class="error">Please fill in all the required fields.</div>';
+        $error_message = 'Please fill in all the required fields.';
     }
 }
 
@@ -67,43 +63,103 @@ $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
-$result = $con->query("SELECT id, content FROM news");
+$result = $con->query("SELECT id, title, content FROM news");
 ?>
 
 <section class="main-section">
-    <div class="main-container">
-        <h2>ADD NOTIFICATION</h2>
+    <div class="add-container">
+        <h2>ADD NEWS</h2>
         <form method="post" action="" enctype="multipart/form-data">
-            <label for="title">TITLE：</label><br>
-            <input type="text" id="title" name="title" style="font-size: 20px;"><br>
-            <label for="content">CONTENT：</label><br>
-            <textarea id="content" name="content" rows="4" style="width: 1044px; height: 318px; font-size: 20px;"></textarea><br>
-
-            <label for="photo">PHOTO：</label><br>
-            <input type="file" id="photo" name="photo" style="margin-bottom: 10px; width: 200px;"><br>
+            <div class="input-container">
+                <label for="title">TITLE：</label><br>
+                <input type="text" id="title" name="title">
+            </div>
+            <div class="input-container">
+                <label for="content">CONTENT：</label><br>
+                <textarea id="content" name="content" rows="4"></textarea>
+            </div>
 
             <div>
-                <input type="submit" value="SUBMIT" style="margin-right: 10px; width: 150px; height: 40px;">
+                <input type="submit" value="SUBMIT" class="submit-button">
             </div>
+
         </form>
 
-        <h2 style="margin-top: 6rem;">Notification List</h2>
-        <?php
-        while ($row = $result->fetch_assoc()) {
-            $id = $row['id'];
-            $content = $row['content'];
-        ?>
-            <div class="notification-box">
-                <div class="notification-content"><?php echo $content; ?></div>
-                <div class="delete-column">
-                    <form method="post" action="">
-                        <input type="hidden" name="delete_id" value="<?php echo $id; ?>">
-                        <input type="submit" value="Delete">
-                    </form>
-                </div>
-            </div>
-        <?php
-        }
-        ?>
+        <hr class="line">
+
+        <h2>NEWS LIST</h2>
+        <div class="notification-container">
+            <?php
+            $count = 0;
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $id = $row['id'];
+                    $title = isset($row['title']) ? $row['title'] : '';
+                    $content = isset($row['content']) ? $row['content'] : '';
+                    $count++;
+            ?>
+                    <div class="notification-box">
+                        <div class="notification-title">ID: <?php echo $id; ?> - Title: <?php echo $title; ?></div>
+                        <div class="notification-content" style="display: none;"><?php echo $content; ?></div>
+                        <div class="delete-edit-column">
+                            <div class="delete-column">
+                                <form method="post" action="">
+                                    <input type="hidden" name="delete_id" value="<?php echo $id; ?>">
+                                    <input type="submit" value="Delete">
+                                </form>
+                            </div>
+                            <div class="edit-column">
+                                <form method="post" action="edit_news.php">
+                                    <input type="hidden" name="edit_id" value="<?php echo $id; ?>">
+                                    <input type="hidden" name="edit_title" value="<?php echo $title; ?>">
+                                    <input type="hidden" name="edit_content" value="<?php echo $content; ?>">
+                                    <input type="submit" value="Edit">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                    if ($count % 4 == 0) {
+                        if ($count == 4) {
+                            echo '<button id="more-button-1" onclick="toggleNotifications()" class="more-button">More</button>';
+                        }
+                        echo '<div id="more-notifications-' . $count . '" class="more-notifications" style="display: none;">';
+                    }
+                }
+            } else {
+                echo '<div class="no-notification-box">No notifications available.</div>';
+            }
+            ?>
+        </div>
     </div>
 </section>
+
+<script>
+    function toggleNotifications() {
+        var moreNotifications = document.querySelectorAll(".more-notifications");
+        var moreButton = document.getElementById("more-button-1");
+        if (moreNotifications.length > 0 && moreButton) {
+            var isDisplayed = moreNotifications[0].style.display === "block";
+            moreNotifications.forEach(function(notification) {
+                notification.style.display = isDisplayed ? "none" : "block";
+            });
+            moreButton.textContent = isDisplayed ? "More" : "Less";
+        }
+    }
+
+    document.addEventListener("click", function(event) {
+        var target = event.target;
+        var isMoreButton = target.tagName === "BUTTON" && target.classList.contains("more-button");
+        var isNotificationContent = target.classList.contains("notification-content");
+        if (!isMoreButton && !isNotificationContent) {
+            var moreNotifications = document.querySelectorAll(".more-notifications");
+            var moreButton = document.getElementById("more-button-1");
+            if (moreButton) {
+                moreButton.textContent = "More";
+            }
+            moreNotifications.forEach(function(notification) {
+                notification.style.display = "none";
+            });
+        }
+    });
+</script>

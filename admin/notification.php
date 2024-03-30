@@ -45,14 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr>
 
         <?php
-        $sql = "SELECT * FROM notification ORDER BY time DESC";
+        $sql = "SELECT * FROM notification ORDER BY date DESC";
         $result = $con->query($sql);
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<p><strong>ID:</strong> " . $row["id"] . "</p>";
                 echo "<p><strong>Title:</strong> " . $row["title"] . "</p>";
-                echo "<p><strong>Time:</strong> " . $row["time"] . "</p>";
+                echo "<p><strong>Time:</strong> " . $row["date"] . "</p>";
                 echo "<p><strong>Content:</strong><br>" . $row["content"] . "</p>";
                 echo "<hr>";
             }
