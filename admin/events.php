@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 
-$title = 'Admin Panel';
+$title = 'Events Management';
 $css = '../css/admin/events.css';
 
 include('../includes/header-admin.php');
