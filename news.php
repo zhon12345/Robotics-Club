@@ -21,8 +21,11 @@ $result = $con->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='news-item'>";
+                echo "<div class='news-photo'>";
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($row["photo"]) . '" />';
+                echo "</div>";
                 echo "<div class='news-details'>";
-                echo "<div class='news-date'>" . date("Y-m-d", strtotime($row["date"])) . "</div>";
+                echo "<div class='news-date'>" . $row["date"] . "</div>";
                 echo "<div class='news-title'>" . htmlspecialchars($row["title"]) . "</div>";
                 echo "<div class='news-content' style='display: none;'>" . $row["content"] . "</div>";
                 echo "<div class='more' onclick='toggleContent(this)'>More</div>";
