@@ -8,11 +8,13 @@ if (!isset($_SESSION['user'])) {
 
 $title = 'User Management';
 $css = '../css/user/user_panel.css';
+$user = $_SESSION['user'];
 
 include('../includes/header-user.php');
 require_once('../includes/helper.php');
 
 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
