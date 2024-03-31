@@ -49,12 +49,12 @@ a {
 	min-height: 100vh;
 	margin-left: 15rem;
 	display: flex;
+	justify-content: center;
 	align-items: center;
 }
 
 .main-container {
 	width: 80vw;
-	padding-left: 50px;
 }
 
 h1 {
@@ -68,8 +68,9 @@ h2 {
 
 .grid {
 	display: grid;
-	grid-template-columns: auto auto;
-	gap: 2rem;
+	grid-template-columns: repeat(2, 48.5%);
+	justify-content: space-between;
+	gap: 2.3rem;
 }
 
 .grid > a {
