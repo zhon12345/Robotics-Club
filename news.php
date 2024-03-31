@@ -15,8 +15,9 @@ $result = $con->query($sql);
 
 ?>
 
-<section class="main-section">
-    <div class="main-container">
+<section class="news-section">
+    <h1 class="section-title"><?php echo $title; ?></h1>
+    <div class="news-container">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
