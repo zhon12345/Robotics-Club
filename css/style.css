@@ -34,6 +34,7 @@ h6 {
 }
 
 p {
+	max-width: 75ch;
 	text-wrap: pretty;
 }
 
@@ -64,7 +65,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-	content: "";
+	content: '';
 	content: none;
 }
 
@@ -82,8 +83,7 @@ table {
 /* style.css */
 
 * {
-	font-family: Bahnschrift, "DIN Alternate", "Franklin Gothic Medium",
-		"Nimbus Sans Narrow", sans-serif-condensed, sans-serif;
+	font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
 }
 
 :root {
@@ -111,7 +111,7 @@ body {
 	background-color: var(--lead-black);
 }
 
-section[class$="section"] {
+section[class$='section'] {
 	padding: 6rem 0;
 }
 
