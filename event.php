@@ -36,7 +36,6 @@ $result = $con->query($sql);
     </div>
 </section>
 
-
 </body>
 
 </html>

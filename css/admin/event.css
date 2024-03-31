@@ -1,3 +1,8 @@
+.main-section {
+	padding-top: 2rem !important;
+	padding-bottom: 0 !important;
+}
+
 .center-message {
 	display: flex;
 	justify-content: center;
@@ -10,33 +15,69 @@
 	text-align: center;
 }
 
-.add-container {
-	margin-bottom: 20px;
-	padding-left: 50px;
+.events-add form {
+	width: 75%;
+	display: grid;
+	grid-template-columns: auto auto auto;
+	grid-template-areas:
+		'title title title'
+		'option-1 option-2 .'
+		'content content content'
+		'submit . .';
 }
 
-#title,
-#content {
-	width: 300px;
-	height: 40px;
-	font-size: 20px;
+.title {
+	grid-area: title;
 }
 
-#content {
-	width: 1000px;
-	height: 300px;
-	resize: none;
-	font-size: 20px;
+.option-1 {
+	grid-area: option-1;
+}
+
+.option-2 {
+	grid-area: option-2;
+}
+
+.content {
+	grid-area: content;
+}
+
+.submit {
+	grid-area: submit;
+	margin-bottom: 0;
 }
 
 .input-container {
+	display: flex;
+	flex-direction: column;
 	margin-bottom: 20px;
+}
+
+.input-container > label {
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.input-container > input,
+.input-container > select,
+.input-container > textarea {
+	padding: 5px;
+	height: 40px;
+	font-size: 18px;
+}
+
+div[class*='option'] > input,
+div[class*='option'] > select {
+	width: 250px;
+}
+
+.content > textarea {
+	height: 10rem;
+	resize: vertical;
 }
 
 .submit-button {
 	width: 100px;
-	height: 40px;
-	font-size: 18px;
 	background-color: #007bff;
 	color: #fff;
 	border: none;
@@ -49,87 +90,27 @@
 }
 
 .line {
-	border: none;
 	border-top: 5px solid #fff;
-	margin: 30px 0;
+	margin: 2rem 0;
 }
 
-.event-box {
-	border: 1px solid #ccc;
-	margin-bottom: 10px;
-	padding: 10px;
-}
-
-.notification-content {
-	font-size: 20px;
-}
-
-.delete-column {
-	margin-top: 10px;
-}
-
-.delete-column,
-.edit-column {
-	display: inline-block;
-	margin-top: 10px;
-	width: 80px;
-	height: 30px;
-	font-size: 16px;
-	background-color: transparent;
-	color: #fff;
-	border: none;
-	cursor: pointer;
-	text-align: center;
-}
-
-.delete-column {
-	margin-right: 10px;
-}
-
-.delete-column input[type="submit"],
-.edit-column input[type="submit"] {
+table {
 	width: 100%;
-	height: 40px;
-	font-size: 18px;
-	background-color: #ff0000;
-	color: #fff;
-	border: none;
-	cursor: pointer;
+	border: 2px solid white;
 }
 
-.event-box {
-	display: inline-block;
-	width: 220px;
-	height: 200px;
-	overflow: hidden;
-	border: 1px solid #ccc;
-	margin-right: 20px;
-	margin-bottom: 20px;
-	vertical-align: top;
-	position: relative;
+thead {
+	text-align: left;
 }
 
-.event-content {
-	font-size: 20px;
-	padding: 10px;
+th,
+td {
+	padding: 5px;
 }
 
-.more-button {
-	background-color: #5b5b5b;
-	border: none;
-	color: white;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 25px;
-	margin: 4px 2px;
-	cursor: pointer;
-	border-radius: 10px;
-}
-
-.more-button:hover {
-	background-color: #000000;
+td > a {
+	font-size: 16px;
+	text-decoration: underline;
 }
 
 .no-event-box {

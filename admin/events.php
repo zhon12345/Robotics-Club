@@ -12,37 +12,34 @@ $css = '../css/admin/event.css';
 include('../includes/header-admin.php');
 require_once('../includes/helper.php');
 
-$error_message = '';
-$success_message = '';
+if (!empty($_POST)) {
+    $title = trim($_POST['title']);
+    $type = trim($_POST['event_type']);
+    $seats = trim($_POST['seats_available']);
+    $content = trim($_POST['content']);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!empty($_POST['title']) && !empty($_POST['content'])) {
-        $title = trim($_POST['title']);
-        $content = trim($_POST['content']);
-
-        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if ($con->connect_error) {
-            die("Connection failed: " . $con->connect_error);
-        }
-
-        $sql = 'INSERT INTO event (title, content) VALUES (?, ?)';
-        $stm = $con->prepare($sql);
-        $stm->bind_param('ss', $title, $content);
-        $stm->execute();
-
-        if ($stm->affected_rows > 0) {
-            $success_message = 'event inserted successfully.';
-            header("Location: ./eventS.php");
-            exit();
-        } else {
-            $error_message = 'Error: Unable to insert event.';
-        }
-
-        $stm->close();
-        $con->close();
-    } else {
-        $error_message = 'Please fill in all the required fields.';
+    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    if ($con->connect_error) {
+        die("Connection failed: " . $con->connect_error);
     }
+
+    $sql = 'INSERT INTO event (title, type, seats, content) VALUES (?, ?, ?, ?)';
+
+    $stm = $con->prepare($sql);
+
+    $stm->bind_param('ssis', $title, $type, $seats, $content);
+
+    $stm->execute();
+
+    if ($stm->affected_rows > 0) {
+        header("Location: events.php");
+        exit();
+    } else {
+        $error_message = 'Error: Unable to insert event.';
+    }
+
+    $stm->close();
+    $con->close();
 }
 
 if (isset($_POST['delete_id'])) {
@@ -52,114 +49,121 @@ if (isset($_POST['delete_id'])) {
         die("Connection failed: " . $con->connect_error);
     }
     $delete_query = "DELETE FROM event WHERE id = ?";
+
     $stm_delete = $con->prepare($delete_query);
+
     $stm_delete->bind_param('s', $delete_id);
+
     $stm_delete->execute();
+
     $stm_delete->close();
     $con->close();
 }
-
-$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
-}
-$result = $con->query("SELECT id, title, content FROM event");
 ?>
 
 <section class="main-section">
-    <div class="add-container">
-        <h2>ADD EVENT</h2>
-        <form method="post" action="" enctype="multipart/form-data">
-            <div class="input-container">
-                <label for="title">TITLE：</label><br>
-                <input type="text" id="title" name="title">
-            </div>
-            <div class="input-container">
-                <label for="content">CONTENT：</label><br>
-                <textarea id="content" name="content" rows="4"></textarea>
-            </div>
+    <div class="main-container">
+        <div class="events-list">
+            <h1>EVENT LIST</h1>
+            <div class="event-container">
+                <table border="1">
+                    <colgroup>
+                        <col style="vertical-align: middle;">
+                        <col>
+                        <col>
+                        <col style="width: 10%;">
+                        <col style="width: 10%;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Seats</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
 
-            <div>
-                <input type="submit" value="SUBMIT" class="submit-button">
-            </div>
+                    <?php
+                    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-        </form>
+                    if ($con->connect_error) {
+                        die("Connection failed: " . $con->connect_error);
+                    }
+
+                    $result = $con->query("SELECT id, title, type, seats, content FROM event");
+
+                    if ($result->num_rows > 0 && $result->num_rows <= 20) {
+                        while ($row = $result->fetch_object()) {
+                            printf(
+                                '<tr>
+                                    <td>%d</td>
+                                    <td>%s</td>
+                                    <td>%s</td>
+                                    <td>%d</td>
+                                    <td>
+                                        <a href="edit-events.php?id=%s">Edit</a> | 
+                                        <a href="events.php?delete=%s">Delete</a>
+                                    </td>
+                                </tr>',
+                                $row->id,
+                                $row->title,
+                                $row->type,
+                                $row->seats,
+                                $row->id,
+                                $row->id
+
+                            );
+                        }
+                    } else {
+                    ?>
+                        <tr>
+                            <td colspan="5">No records found.</td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+
+                </table>
+            </div>
+        </div>
 
         <hr class="line">
 
-        <h2>EVENT LIST</h2>
-        <div class="event-container">
-            <?php
-            $count = 0;
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $id = $row['id'];
-                    $title = isset($row['title']) ? $row['title'] : '';
-                    $content = isset($row['content']) ? $row['content'] : '';
-                    $count++;
-            ?>
-                    <div class="event-box">
-                        <div class="event-title">ID: <?php echo $id; ?> - Title: <?php echo $title; ?></div>
-                        <div class="event-content" style="display: none;"><?php echo $content; ?></div>
-                        <div class="delete-edit-column">
-                            <div class="delete-column">
-                                <form method="post" action="">
-                                    <input type="hidden" name="delete_id" value="<?php echo $id; ?>">
-                                    <input type="submit" value="Delete">
-                                </form>
-                            </div>
-                            <div class="edit-column">
-                                <form method="post" action="edit_events.php">
-                                    <input type="hidden" name="edit_id" value="<?php echo $id; ?>">
-                                    <input type="hidden" name="edit_title" value="<?php echo $title; ?>">
-                                    <input type="hidden" name="edit_content" value="<?php echo $content; ?>">
-                                    <input type="submit" value="Edit">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-            <?php
-                    if ($count % 4 == 0) {
-                        if ($count == 4) {
-                            echo '<button id="more-button-1" onclick="toggleEvent()" class="more-button">More</button>';
-                        }
-                        echo '<div id="more-event-' . $count . '" class="more-event" style="display: none;">';
-                    }
-                }
-            } else {
-                echo '<div class="no-event-box">No event available.</div>';
-            }
-            ?>
+        <div class="events-add">
+            <h1>ADD EVENT</h1>
+            <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                <div class="input-container title">
+                    <label for="title">Event Name:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="input-container option-1">
+                    <label for="event_type">Event Type:</label>
+                    <select id="event_type" name="event_type" required>
+                        <option value="Meetup">Meetup</option>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Competition">Competition</option>
+                    </select>
+                </div>
+
+                <div class="input-container option-2">
+                    <label for="seats_available">Seats Available:</label>
+                    <input type="number" id="seats_available" name="seats_available" min="1" required>
+                </div>
+
+                <div class="input-container content">
+                    <label for="content">Description:</label>
+                    <textarea id="content" name="content" required></textarea>
+                </div>
+
+                <div class="input-container submit">
+                    <input type="submit" value="SUBMIT" class="submit-button">
+                </div>
+            </form>
         </div>
     </div>
 </section>
+</body>
 
-<script>
-    function toggleNotifications() {
-        var moreNotifications = document.querySelectorAll(".more-notifications");
-        var moreButton = document.getElementById("more-button-1");
-        if (moreNotifications.length > 0 && moreButton) {
-            var isDisplayed = moreNotifications[0].style.display === "block";
-            moreNotifications.forEach(function(notification) {
-                notification.style.display = isDisplayed ? "none" : "block";
-            });
-            moreButton.textContent = isDisplayed ? "More" : "Less";
-        }
-    }
-
-    document.addEventListener("click", function(event) {
-        var target = event.target;
-        var isMoreButton = target.tagName === "BUTTON" && target.classList.contains("more-button");
-        var isNotificationContent = target.classList.contains("notification-content");
-        if (!isMoreButton && !isNotificationContent) {
-            var moreNotifications = document.querySelectorAll(".more-notifications");
-            var moreButton = document.getElementById("more-button-1");
-            if (moreButton) {
-                moreButton.textContent = "More";
-            }
-            moreNotifications.forEach(function(notification) {
-                notification.style.display = "none";
-            });
-        }
-    });
-</script>
+</html>
