@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         $id = $row->id;
         $title = $row->title;
+        $date = $row->date;
         $type = $row->type;
         $seats = $row->seats;
         $content = $row->content;
@@ -52,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $id = trim($_POST['id']);
     $title = trim($_POST['title']);
+    $date = trim($_POST['date']);
     $type = trim($_POST['event_type']);
     $seats = trim($_POST['seats_available']);
     $content = trim($_POST['content']);
@@ -62,12 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         die("Connection failed: " . $con->connect_error);
     }
 
-    $stm = $con->prepare("UPDATE event SET title = ?, type = ?, seats = ?, content = ? WHERE id =?");
+    $stm = $con->prepare("UPDATE event SET title = ?, date = ?, type = ?, seats = ?, content = ? WHERE id =?");
 
-    $stm->bind_param('ssisi', $title, $type, $seats, $content, $id);
+    $stm->bind_param('sssisi', $title, $date, $type, $seats, $content, $id);
 
     if ($stm->execute()) {
-        $message['success'] = 'Event successfully updated! <a href="events.php">Go Back</a>';
+        header("location: events.php");
     } else {
         $message['error'] = 'Something went wrong, please try again!';
     }
@@ -84,9 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <?php
         if (!empty($message['error'])) {
             echo '<div class="message error">' . $message['error'] . '</div>';
-        }
-        if (!empty($message['success'])) {
-            echo '<div class="message success">' . $message['success'] . '</div>';
         }
         ?>
 
@@ -110,6 +109,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     </div>
 
                     <div class="input-container option-2">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" value="<?php echo $date ?>" required>
+                    </div>
+
+                    <div class="input-container option-3">
                         <label for="seats_available">Seats Available:</label>
                         <input type="number" id="seats_available" name="seats_available" min="1" value="<?php echo $seats ?>" required>
                     </div>
@@ -121,7 +125,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 </div>
 
                 <div class="input-container submit">
-                    <input type="submit" value="submit" class="submit-button">
+                    <input type="submit" value="Submit">
+                    <input type="button" value="Cancel" onclick="location='events.php'">
                 </div>
             </form>
         </form>
