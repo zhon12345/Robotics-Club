@@ -1,43 +1,49 @@
 <?php
-session_start();
+$title = 'Notifications';
+$css = '..\css\user\notification.css';
 
-$title = 'Show Notification';
-$css = '../css/user/notification.css';
+include('..\includes\header-user.php');
+require_once('..\includes\helper.php');
 
-include('../includes/header-user.php');
-require_once('../includes/helper.php');
+$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
+}
+
+$sql = "SELECT * FROM notification";
+$result = $con->query($sql);
 
 ?>
-<section class="main-section">
-    <div class="main-container">
-        <div class="Notification Display">
-            <h1>Notifications</h1>
-            <div class="notification-container">
-                <?php
-                $connection = mysqli_connect('localhost', 'username', 'password', 'notification');
-                if (!$connection) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
 
-                $notification = [];
-                $query = "SELECT * FROM notification";
-                $result = mysqli_query($connection, $query);
-                if (!$result) {
-                    die("Error in query: " . mysqli_error($connection));
-                }
-                if ($result) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<div class="notification">';
-                        echo '<h2>' . $row['title'] . '</h2>';
-                        echo '<p>' . $row['message'] . '</p>';
-                        echo '</div>';
-                    }
-                } else {
-                    echo "Error fetching notifications: " . mysqli_error($connection);
-                }
-                mysqli_close($connection);
-                ?>
-            </div>
-        </div>
+<section class="main-section">
+<h1>Notification</h1>
+    <div class="main-container">
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $date = date("Y-m-d", strtotime($row["date"]));
+                $title = htmlspecialchars($row["title"]);
+                $content = $row["content"];
+
+                echo "<div class='event-item'>";
+                echo "<div class='event-details'>";
+                echo "<div class='event-date'>date：$date</div>";
+                echo "<div class='event-title'>title：$title</div>";
+                echo "<div class='event-content'>content：$content</div>";
+                echo "</div>";
+                echo "</div>";
+            }
+        } else {
+            echo "<div class='no-results'>0 result</div>";
+        }
+        ?>
     </div>
 </section>
+
+</body>
+
+</html>
+
+<?php
+$con->close();
+?>

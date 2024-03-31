@@ -1,32 +1,32 @@
+.event-details {
+	border: 1px solid #fff;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+.event-date,
+.event-title,
+.event-content {
+	margin-bottom: 10px;
+}
+
+.no-results {
+	color: #ff0000;
+	font-weight: bold;
+}
+
 .main-section {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	margin-top: 6rem;
 }
 
-.notification-container {
-    width: 50%;
-    padding: 20px;
+.section-title {
+	margin-top: 0;
 }
 
-.notification {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.notification-message {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.notification-id {
-    font-style: italic;
-    color: #777;
-}
-
-h1 {
-    margin-bottom: 20px;
-    text-align: center;
+.event-container {
+	margin-top: 20px;
 }
