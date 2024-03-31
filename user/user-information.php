@@ -54,7 +54,7 @@ $result = $con->query($query);
         </div>
 
         <div class="edit-form" style="display: none;">
-            <form action="update_user.php" method="post">
+            <form action="user\update_user.php" method="post">
 
             </form>
         </div>
