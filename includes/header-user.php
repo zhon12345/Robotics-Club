@@ -27,7 +27,6 @@
             <div class="links">
                 <a href="notification-display.php">Notifications</a>
                 <a href="user-information.php">User Information</a>
-                <a href="tickit.php">Tickit</a>
             </div>
             <div class="logout">
                 <a href="../logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
