@@ -17,29 +17,14 @@
 
 .events-add form {
 	width: 75%;
-	display: grid;
-	grid-template-columns: auto auto auto;
-	grid-template-areas:
-		'title title title'
-		'option-1 option-2 .'
-		'content content content'
-		'submit . .';
+	display: flex;
+	flex-direction: column;
 }
 
-.title {
-	grid-area: title;
-}
-
-.option-1 {
-	grid-area: option-1;
-}
-
-.option-2 {
-	grid-area: option-2;
-}
-
-.content {
-	grid-area: content;
+.options {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .submit {
@@ -113,14 +98,46 @@ td > a {
 	text-decoration: underline;
 }
 
-.no-event-box {
-	background-color: white;
-	color: black;
-	padding: 10px;
-	text-align: center;
+/* popup */
+.popup.active {
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+.popup {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	margin: auto;
-	width: 80%;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	margin-top: 20px;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	gap: 1rem;
+	width: 300px;
+	padding: 20px;
+	color: var(--lead-black);
+	background-color: white;
+	box-shadow: var(--box-shadow);
+}
+
+.card table {
+	border: 1px solid black;
+}
+
+.card form {
+	display: flex;
+	justify-content: space-between;
+}
+
+.card form .button {
+	padding: 10px;
+	width: 120px;
 }
