@@ -14,16 +14,17 @@ require_once('../includes/helper.php');
             <h1>Notifications</h1>
             <div class="notification-container">
                 <?php
-                $connection = mysqli_connect('localhost', 'username', 'password', 'notification');
-                if (!$connection) {
-                    die("Connection failed: " . mysqli_connect_error());
+                $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                if ($con->connect_error) {
+                    die("Connection failed: " . $con->connect_error);
                 }
 
                 $notification = [];
                 $query = "SELECT * FROM notification";
-                $result = mysqli_query($connection, $query);
+                $result = mysqli_query($con, $query);
                 if (!$result) {
-                    die("Error in query: " . mysqli_error($connection));
+                    die("Error in query: " . mysqli_error($con));
                 }
                 if ($result) {
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -33,9 +34,9 @@ require_once('../includes/helper.php');
                         echo '</div>';
                     }
                 } else {
-                    echo "Error fetching notifications: " . mysqli_error($connection);
+                    echo "Error fetching notifications: " . mysqli_error($con);
                 }
-                mysqli_close($connection);
+                mysqli_close($con);
                 ?>
             </div>
         </div>
