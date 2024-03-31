@@ -50,13 +50,7 @@ $result = $con->query($query);
         </div>
 
         <div class="edit-button">
-            <button onclick="openEditForm()">Edit</button>
-        </div>
-
-        <div class="edit-form" style="display: none;">
-            <form action="user\update_user.php" method="post">
-
-            </form>
+            <a href="update_user.php"><button>Edit</button></a>
         </div>
     </div>
 </section>
