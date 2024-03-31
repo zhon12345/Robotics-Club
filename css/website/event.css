@@ -9,27 +9,27 @@
 	padding-right: 3rem;
 }
 
-.news-item {
+.event-item {
 	width: 30%;
 	margin: 1%;
 	border: 1px solid #ccc;
 	overflow: hidden;
 }
 
-.news-details {
+.event-details {
 	padding: 10px;
 }
 
-.news-date {
+.event-date {
 	font-weight: bold;
 }
 
-.news-title {
+.event-title {
 	margin-top: 5px;
 	font-size: 18px;
 }
 
-.news-content {
+.event-content {
 	margin-top: 10px;
 	font-size: 14px;
 }
