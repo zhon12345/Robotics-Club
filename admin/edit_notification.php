@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Connection failed: " . $con->connect_error);
         }
 
-        $sql = 'UPDATE news SET title = ?, content = ? WHERE id = ?';
+        $sql = 'UPDATE notification SET title = ?, content = ? WHERE id = ?';
         $stm = $con->prepare($sql);
         $stm->bind_param('ssi', $title, $content, $id);
         $stm->execute();
@@ -52,7 +52,7 @@ if (isset($_POST['edit_id'])) {
     if ($con->connect_error) {
         die("Connection failed: " . $con->connect_error);
     }
-    $result = $con->query("SELECT title, content FROM news WHERE id = $edit_id");
+    $result = $con->query("SELECT title, content FROM notification WHERE id = $edit_id");
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $edit_title = $row['title'];
