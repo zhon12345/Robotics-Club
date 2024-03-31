@@ -1,5 +1,5 @@
 <?php
-$title = 'Event';
+$title = 'Events';
 $css = 'css/website/event.css';
 
 include('includes/header.php');
@@ -15,17 +15,17 @@ $result = $con->query($sql);
 
 ?>
 
-<section class="main-section">
-    <div class="main-container">
+<section class="event-section">
+    <h1 class="section-title"><?php echo $title; ?></h1>
+    <div class="event-container">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='event-item'>";
                 echo "<div class='event-details'>";
-                echo "<div class='event-date'>" . date("Y-m-d", strtotime($row["date"])) . "</div>";
-                echo "<div class='event-title'>" . htmlspecialchars($row["title"]) . "</div>";
-                echo "<div class='event-content' style='display: none;'>" . $row["content"] . "</div>";
-                echo "<div class='more' onclick='toggleContent(this)'>More</div>";
+                echo "<div class='event-date'>Date: " . date("Y-m-d", strtotime($row["date"])) . "</div>";
+                echo "<div class='event-title'>Event: " . htmlspecialchars($row["title"]) . "</div>";
+                echo "<div class='event-content'>About Event: " . $row["content"] . "</div>";
                 echo "</div>";
                 echo "</div>";
             }
@@ -36,7 +36,7 @@ $result = $con->query($sql);
     </div>
 </section>
 
-<script src="js\events.js"></script>
+
 </body>
 
 </html>

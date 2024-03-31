@@ -66,7 +66,7 @@ if (isset($_POST['edit_id'])) {
 
 <section class="main-section">
     <div class="edit-container">
-        <h2>Edit Notification</h2>
+        <h2>Edit Event</h2>
         <?php
         if ($error_message !== '') {
             echo '<div class="error-message">' . $error_message . '</div>';

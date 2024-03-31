@@ -1,8 +1,17 @@
-.main-section {
+.section-title {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+	font-size: 36px;
+	border-bottom: 2px solid white;
+	padding-bottom: 10px;
+}
+
+.news-section {
 	width: 100%;
 }
 
-.main-container {
+.news-container {
 	display: flex;
 	flex-wrap: wrap;
 	padding-left: 6rem;
@@ -38,11 +47,11 @@
 	margin-top: 10px;
 	text-align: right;
 	cursor: pointer;
-	color: blue;
+	color: rgb(171, 255, 54);
 }
 
 .more:hover {
-	color: darkblue;
+	color: rgb(52, 130, 0);
 }
 
 .enlarge {
