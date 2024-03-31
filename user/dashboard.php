@@ -7,7 +7,6 @@ if (!isset($_SESSION['user'])) {
 }
 
 $title = 'User Dashboard';
-
 include('../includes/header-user.php');
 ?>
 
