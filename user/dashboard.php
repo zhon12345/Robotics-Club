@@ -18,7 +18,7 @@ include('../includes/header-user.php');
         <h2>Welcome <b><?php echo $user ?></b>, what would you like to do?</h2>
 
         <div class="grid">
-            <a href="notification-display.php"><i class="fa-regular fa-envelope"></i>View Notification</a>
+            <a href="notification-display.php"><i class="fa-regular fa-envelope"></i>View Notifications</a>
             <a href="user-information.php"><i class="fa-solid fa-user"></i>My Account</a>
         </div>
     </div>
