@@ -31,20 +31,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $current_user = $_SESSION['user'];
     
     // 获取新的用户名、电子邮件和密码
-    $new_username = $_POST['new_username'];
     $new_email = $_POST['new_email'];
     $new_password = $_POST['new_password'];
 
-    // 更新用户信息
-    $update_query = "UPDATE user SET username = '$new_username', email = '$new_email', password = '$new_password' WHERE username = '$current_user'";
-    if ($con->query($update_query) === TRUE) {
-        // 更新成功，设置成功消息并重定向回用户面板页面
-        $success_message = 'User information updated successfully.';
-        header("location: user-information.php");
-        exit();
+    // 验证输入
+    if (empty($new_email) || empty($new_password)) {
+        $error_message = "Email and password are required fields.";
     } else {
-        // 更新失败，设置错误消息
-        $error_message = "Error updating record: " . $con->error;
+        // 更新用户信息
+        $update_query = "UPDATE user SET email = '$new_email', password = '$new_password' WHERE username = '$current_user'";
+        if ($con->query($update_query) === TRUE) {
+            // 更新成功，设置成功消息并重定向回用户面板页面
+            $success_message = 'User information updated successfully.';
+            header("location: user-information.php");
+            exit();
+        } else {
+            // 更新失败，设置错误消息
+            $error_message = "Error updating record: " . $con->error;
+        }
     }
 
     // 关闭数据库连接
