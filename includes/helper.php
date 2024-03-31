@@ -69,3 +69,14 @@ function isUserExist($value, $column)
 
     return $exist;
 }
+
+// event.php
+function getSeats()
+{
+    return array(
+        'available' => '> 0',
+        'sold-out' => '= 0'
+    );
+}
+
+$SEATS = getSeats();

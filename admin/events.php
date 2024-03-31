@@ -13,50 +13,127 @@ include('../includes/header-admin.php');
 require_once('../includes/helper.php');
 
 if (!empty($_POST)) {
-    $title = trim($_POST['title']);
-    $type = trim($_POST['event_type']);
-    $seats = trim($_POST['seats_available']);
-    $content = trim($_POST['content']);
+    if (!isset($_POST['id'])) {
+        $title = trim($_POST['title']);
+        $type = trim($_POST['event_type']);
+        $seats = trim($_POST['seats_available']);
+        $content = trim($_POST['content']);
 
-    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    if ($con->connect_error) {
-        die("Connection failed: " . $con->connect_error);
-    }
+        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-    $sql = 'INSERT INTO event (title, type, seats, content) VALUES (?, ?, ?, ?)';
+        if ($con->connect_error) {
+            die("Connection failed: " . $con->connect_error);
+        }
 
-    $stm = $con->prepare($sql);
+        $sql = 'INSERT INTO event (title, date, type, seats, content) VALUES (?, ?, ?, ?)';
 
-    $stm->bind_param('ssis', $title, $type, $seats, $content);
+        $stm = $con->prepare($sql);
 
-    $stm->execute();
+        $stm->bind_param('sssis', $title, $date, $type, $seats, $content);
 
-    if ($stm->affected_rows > 0) {
-        header("Location: events.php");
-        exit();
+        $stm->execute();
+
+        if ($stm->affected_rows > 0) {
+            header("Location: events.php");
+            exit();
+        } else {
+            $error_message = 'Error: Unable to insert event.';
+        }
+
+        $stm->close();
+        $con->close();
     } else {
-        $error_message = 'Error: Unable to insert event.';
-    }
+        $id = trim($_POST['id']);
 
-    $stm->close();
-    $con->close();
+        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        if ($con->connect_error) {
+            die("Connection failed: " . $con->connect_error);
+        }
+
+        $id  = $con->real_escape_string($id);
+        $stm = $con->prepare("DELETE FROM event WHERE id = ?");
+
+        $stm->bind_param('i', $id);
+
+        $stm->execute();
+
+        if ($stm->affected_rows > 0) {
+            header("location: events.php");
+            exit();
+        }
+
+        $stm->close();
+        $con->close();
+    }
 }
 
-if (isset($_POST['delete_id'])) {
-    $delete_id = $_POST['delete_id'];
+if (!empty($_GET)) {
+    $id = isset($_GET['delete']) ? trim(($_GET['delete'])) : null;
+
     $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
     if ($con->connect_error) {
         die("Connection failed: " . $con->connect_error);
     }
-    $delete_query = "DELETE FROM event WHERE id = ?";
 
-    $stm_delete = $con->prepare($delete_query);
+    $id  = $con->real_escape_string($id);
+    $sql = "SELECT * FROM `event` WHERE id = $id";
 
-    $stm_delete->bind_param('s', $delete_id);
+    $result = $con->query($sql);
 
-    $stm_delete->execute();
+    if ($row = $result->fetch_object()) {
+        printf(
+            '<div class="popup active">
+                <div class="card">
+                    <h3>Confirmation</h3>
+                    <p>Are you sure you want to delete the following?</p>
+                    
+                    <table border="1">
+                    <tr>
+                        <td>ID: </td>
+                        <td>%d</td>
+                    </tr>
+                    <tr>
+                        <td>Title: </td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Date: </td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Type: </td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Seats: </td>
+                        <td>%d</td>
+                    </tr>
+                    <tr>
+                        <td>Content: </td>
+                        <td>%s</td>
+                    </tr>
+                    </table>
 
-    $stm_delete->close();
+                    <form action="" method="post">
+                        <input type="hidden" name="id" value="%s" />
+                        <input type="submit" name="yes" value="Yes" class="button"/>
+                        <input type="button" value="Cancel" onclick="location=\'events.php\'" class="button"/>
+                    </form>
+                </div>
+            </div>',
+            $row->id,
+            $row->title,
+            $row->date,
+            $row->type,
+            $row->seats,
+            $row->content,
+            $row->id
+        );
+    }
+
+    $result->free();
     $con->close();
 }
 ?>
@@ -71,6 +148,7 @@ if (isset($_POST['delete_id'])) {
                         <col style="vertical-align: middle;">
                         <col>
                         <col>
+                        <col>
                         <col style="width: 10%;">
                         <col style="width: 10%;">
                     </colgroup>
@@ -78,6 +156,7 @@ if (isset($_POST['delete_id'])) {
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
+                            <th>Date</th>
                             <th>Type</th>
                             <th>Seats</th>
                             <th>Options</th>
@@ -91,7 +170,7 @@ if (isset($_POST['delete_id'])) {
                         die("Connection failed: " . $con->connect_error);
                     }
 
-                    $result = $con->query("SELECT id, title, type, seats, content FROM event");
+                    $result = $con->query("SELECT id, title, date, type, seats, content FROM event");
 
                     if ($result->num_rows > 0 && $result->num_rows <= 20) {
                         while ($row = $result->fetch_object()) {
@@ -100,19 +179,20 @@ if (isset($_POST['delete_id'])) {
                                     <td>%d</td>
                                     <td>%s</td>
                                     <td>%s</td>
+                                    <td>%s</td>
                                     <td>%d</td>
                                     <td>
-                                        <a href="edit-events.php?id=%s">Edit</a> | 
-                                        <a href="events.php?delete=%s">Delete</a>
+                                        <a href="edit-events.php?id=%d">Edit</a> | 
+                                        <a href="events.php?delete=%d;">Delete</a>
                                     </td>
                                 </tr>',
                                 $row->id,
                                 $row->title,
+                                date("d-M-Y", strtotime($row->date)),
                                 $row->type,
                                 $row->seats,
                                 $row->id,
                                 $row->id
-
                             );
                         }
                     } else {
@@ -138,18 +218,25 @@ if (isset($_POST['delete_id'])) {
                     <input type="text" id="title" name="title" required>
                 </div>
 
-                <div class="input-container option-1">
-                    <label for="event_type">Event Type:</label>
-                    <select id="event_type" name="event_type" required>
-                        <option value="Meetup">Meetup</option>
-                        <option value="Workshop">Workshop</option>
-                        <option value="Competition">Competition</option>
-                    </select>
-                </div>
+                <div class="options">
+                    <div class="input-container option-1">
+                        <label for="event_type">Event Type:</label>
+                        <select id="event_type" name="event_type" required>
+                            <option value="Meetup">Meetup</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Competition">Competition</option>
+                        </select>
+                    </div>
 
-                <div class="input-container option-2">
-                    <label for="seats_available">Seats Available:</label>
-                    <input type="number" id="seats_available" name="seats_available" min="1" required>
+                    <div class="input-container option-2">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="input-container option-3">
+                        <label for="seats_available">Seats Available:</label>
+                        <input type="number" id="seats_available" name="seats_available" min="1" required>
+                    </div>
                 </div>
 
                 <div class="input-container content">
@@ -158,7 +245,7 @@ if (isset($_POST['delete_id'])) {
                 </div>
 
                 <div class="input-container submit">
-                    <input type="submit" value="SUBMIT" class="submit-button">
+                    <input type="submit" value="Submit" class="submit-button">
                 </div>
             </form>
         </div>
