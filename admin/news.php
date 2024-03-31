@@ -70,27 +70,8 @@ $result = $con->query("SELECT id, title, content FROM news");
 ?>
 
 <section class="main-section">
-    <div class="add-container">
-        <h2>ADD NEWS</h2>
-        <form method="post" action="" enctype="multipart/form-data">
-            <div class="input-container">
-                <label for="title">TITLE：</label><br>
-                <input type="text" id="title" name="title">
-            </div>
-            <div class="input-container">
-                <label for="content">CONTENT：</label><br>
-                <textarea id="content" name="content" rows="4"></textarea>
-            </div>
-
-            <div>
-                <input type="submit" value="SUBMIT" class="submit-button">
-            </div>
-
-        </form>
-
-        <hr class="line">
-
-        <h2>NEWS LIST</h2>
+    <div class="main-container">
+        <h1>NEWS LIST</h1>
         <div class="notification-container">
             <?php
             $count = 0;
@@ -130,10 +111,30 @@ $result = $con->query("SELECT id, title, content FROM news");
                     }
                 }
             } else {
-                echo '<div class="no-notification-box">No notifications available.</div>';
+                echo '<div class="no-notification-box">No News available.</div>';
             }
             ?>
         </div>
+
+        <hr class="line">
+
+        <h1>ADD NEWS</h1>
+        <form method="post" action="" enctype="multipart/form-data">
+            <div class="input-container">
+                <label for="title">TITLE：</label><br>
+                <input type="text" id="title" name="title">
+            </div>
+
+            <div class="input-container">
+                <label for="content">CONTENT：</label><br>
+                <textarea id="content" name="content" rows="4"></textarea>
+            </div>
+
+            <div>
+                <input type="submit" value="SUBMIT" class="submit-button">
+            </div>
+
+        </form>
     </div>
 </section>
 
@@ -166,3 +167,6 @@ $result = $con->query("SELECT id, title, content FROM news");
         }
     });
 </script>
+</body>
+
+</html>
