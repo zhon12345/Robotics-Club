@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $title = 'Edit News';
-$css = '../css/admin/edit-display.css';
+$css = '../css/admin/edit.css';
 
 include('../includes/header-admin.php');
 require_once('../includes/helper.php');
