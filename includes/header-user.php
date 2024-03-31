@@ -22,11 +22,11 @@
     <div class="sidenav">
         <div class="container">
             <div class="logo">
-                <a href="dashboard.php"><i class="fa-solid fa-user"></i><?php echo ADMIN_USER ?></a>
+                <a href="dashboard.php"><i class="fa-solid fa-user"></i><?php echo $user ?></a>
             </div>
             <div class="links">
-                <a href="notification-display.php">Notifications</a>
-                <a href="user-information.php">User Information</a>
+                <a href="notification-display.php">View Notifications</a>
+                <a href="user-information.php">My Account</a>
             </div>
             <div class="logout">
                 <a href="../logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>

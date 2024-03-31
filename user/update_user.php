@@ -17,12 +17,12 @@ require_once('../includes/helper.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
     if ($con->connect_error) {
         die("Connection failed: " . $con->connect_error);
     }
 
     $current_user = $_SESSION['user'];
-    
     $new_email = $_POST['new_email'];
     $new_password = $_POST['new_password'];
 
