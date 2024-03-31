@@ -8,6 +8,7 @@ if (!isset($_SESSION['user'])) {
 
 $title = 'Edit User Information';
 $css = '../css/admin/edit.css';
+$user = $_SESSION['user'];
 
 $error_message = '';
 $success_message = '';

@@ -8,6 +8,7 @@ if (!isset($_SESSION['user'])) {
 
 $title = 'User Management';
 $css = '../css/user/user_panel.css';
+$user = $_SESSION['user'];
 
 include('../includes/header-user.php');
 require_once('../includes/helper.php');

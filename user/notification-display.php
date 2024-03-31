@@ -1,13 +1,19 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['user'])) {
+    header("location: ../login.php");
+    exit();
+}
+
 $title = 'Show Notification';
 $css = '../css/user/notification.css';
+$user = $_SESSION['user'];
 
 include('../includes/header-user.php');
 require_once('../includes/helper.php');
-
 ?>
+
 <section class="main-section">
     <div class="main-container">
         <div class="Notification Display">
