@@ -9,7 +9,6 @@ if (!isset($_SESSION['user'])) {
 $title = 'User Dashboard';
 include('../includes/header-admin.php');
 ?>
-include('../includes/header-user.php');
 <section class="main-section">
     <div class="main-container">
         <h2>Welcome <b></b>, what would you like to do?</h2>
