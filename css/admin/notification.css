@@ -1,0 +1,32 @@
+.main-section {
+    display: flex;
+    justify-content: center;
+}
+
+.notification-container {
+    width: 50%;
+    padding: 20px;
+}
+
+.notification {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.notification-message {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification-id {
+    font-style: italic;
+    color: #777;
+}
+
+h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
