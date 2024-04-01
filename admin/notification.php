@@ -90,7 +90,7 @@ if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 
-$result = $con->query("SELECT id, title, content FROM notification");
+$result = $con->query("SELECT id, title, date, content FROM notification");
 ?>
 
 <section class="main-section">
@@ -109,12 +109,14 @@ $result = $con->query("SELECT id, title, content FROM notification");
                 <colgroup>
                     <col style="width: 3%;">
                     <col>
+                    <col style="width: 12%;">
                     <col style="width: 8%;">
                 </colgroup>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
+                        <th>Date</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -125,6 +127,7 @@ $result = $con->query("SELECT id, title, content FROM notification");
                             '<tr>
                             <td>%d</td>
                             <td>%s</td>
+                            <td>%s</td>
                             <td>
                                 <a href="edit.php?table=notification&id=%d">Edit</a> | 
                                 <a href="notification.php?delete=%d">Delete</a>
@@ -132,6 +135,7 @@ $result = $con->query("SELECT id, title, content FROM notification");
                         </tr>',
                             $row->id,
                             $row->title,
+                            date("d-M-Y", strtotime($row->date)),
                             $row->id,
                             $row->id
                         );
@@ -141,7 +145,7 @@ $result = $con->query("SELECT id, title, content FROM notification");
                         <?php
                         printf(
                             '<tr>
-                                <td colspan="4">%d record(s) found.</td>
+                                <td colspan="5">%d record(s) found.</td>
                             </tr>',
                             $result->num_rows
                         );
@@ -151,7 +155,7 @@ $result = $con->query("SELECT id, title, content FROM notification");
                 } else {
                 ?>
                     <tr>
-                        <td colspan="4">No records found.</td>
+                        <td colspan="5">No records found.</td>
                     </tr>
                 <?php
                 }
