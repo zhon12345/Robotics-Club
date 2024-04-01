@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 
-$title = 'event Management';
+$title = 'Event Management';
 $css = '../css/admin/event.css';
 
 include('../includes/header-admin.php');
@@ -25,7 +25,7 @@ if (!empty($_POST)) {
             die("Connection failed: " . $con->connect_error);
         }
 
-        $sql = 'INSERT INTO event (title, date, type, seats, content) VALUES (?, ?, ?, ?)';
+        $sql = 'INSERT INTO events (title, date, type, seats, content) VALUES (?, ?, ?, ?)';
 
         $stm = $con->prepare($sql);
 
@@ -52,7 +52,7 @@ if (!empty($_POST)) {
         }
 
         $id  = $con->real_escape_string($id);
-        $stm = $con->prepare("DELETE FROM event WHERE id = ?");
+        $stm = $con->prepare("DELETE FROM events WHERE id = ?");
 
         $stm->bind_param('i', $id);
 
@@ -78,7 +78,7 @@ if (!empty($_GET)) {
     }
 
     $id  = $con->real_escape_string($id);
-    $sql = "SELECT * FROM `event` WHERE id = $id";
+    $sql = "SELECT * FROM events WHERE id = $id";
 
     $result = $con->query($sql);
 
@@ -136,6 +136,14 @@ if (!empty($_GET)) {
     $result->free();
     $con->close();
 }
+
+$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
+}
+
+$result = $con->query("SELECT id, title, date, type, seats, content FROM events");
 ?>
 
 <section class="main-section">
@@ -145,7 +153,7 @@ if (!empty($_GET)) {
             <div class="event-container">
                 <table border="1">
                     <colgroup>
-                        <col style="vertical-align: middle;">
+                        <col style="width: 3%;">
                         <col>
                         <col>
                         <col>
@@ -164,14 +172,6 @@ if (!empty($_GET)) {
                     </thead>
 
                     <?php
-                    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-                    if ($con->connect_error) {
-                        die("Connection failed: " . $con->connect_error);
-                    }
-
-                    $result = $con->query("SELECT id, title, date, type, seats, content FROM event");
-
                     if ($result->num_rows > 0 && $result->num_rows <= 20) {
                         while ($row = $result->fetch_object()) {
                             printf(
@@ -182,7 +182,7 @@ if (!empty($_GET)) {
                                     <td>%s</td>
                                     <td>%d</td>
                                     <td>
-                                        <a href="edit-events.php?id=%d">Edit</a> | 
+                                        <a href="edit.php?table=events&id=%d">Edit</a> | 
                                         <a href="events.php?delete=%d;">Delete</a>
                                     </td>
                                 </tr>',
@@ -202,8 +202,10 @@ if (!empty($_GET)) {
                         </tr>
                     <?php
                     }
-                    ?>
 
+                    $result->free();
+                    $con->close();
+                    ?>
                 </table>
             </div>
         </div>

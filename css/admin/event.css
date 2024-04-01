@@ -1,5 +1,5 @@
 .main-section {
-	padding-top: 2rem !important;
+	align-items: flex-start !important;
 	padding-bottom: 0 !important;
 }
 
@@ -15,7 +15,7 @@
 	text-align: center;
 }
 
-.events-add form {
+div[class$='add'] form {
 	width: 75%;
 	display: flex;
 	flex-direction: column;

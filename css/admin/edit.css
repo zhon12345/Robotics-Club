@@ -1,69 +1,70 @@
-.main-section {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-}
-
-.edit-container {
+.main-section div[class$='container'] {
 	width: 50%;
 	padding: 20px;
 	border: 1px solid #fff;
 	border-radius: 8px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	background-color: transparent;
-	color: #fff;
+	box-shadow: var(--box-shadow);
 }
 
-h2 {
-	margin-bottom: 20px;
-	color: #007bff;
+h1 {
+	margin-bottom: 1.5rem;
 }
 
-.error-message,
-.success-message {
-	margin-bottom: 10px;
+.message {
+	margin-bottom: 1rem;
 	padding: 10px;
 	border-radius: 4px;
 }
 
-.error-message {
+.message.error {
 	background-color: #f8d7da;
 	border: 1px solid #f5c6cb;
 	color: #721c24;
 }
 
-.success-message {
-	background-color: #d4edda;
-	border: 1px solid #c3e6cb;
-	color: #155724;
-}
-
 .input-container {
+	display: flex;
+	flex-direction: column;
 	margin-bottom: 20px;
 }
 
 .input-container > label {
-	font-size: 18px;
+	font-size: 20px;
 	margin-bottom: 5px;
 }
 
 .input-container > input,
+.input-container > select,
 .input-container > textarea {
-	width: 100%;
-	padding: 10px;
-	font-size: 16px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
+	padding: 5px;
+	height: 40px;
+	font-size: 18px;
 }
 
-textarea {
+.options {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+div[class*='option'] > input,
+div[class*='option'] > select {
+	width: 150px;
+}
+
+.content > textarea {
+	height: 10rem;
 	resize: vertical;
 }
 
-.submit-button {
-	width: 100%;
+.submit {
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.submit input,
+.error-container input {
+	width: 48%;
 	padding: 10px;
 	font-size: 16px;
 	background-color: #007bff;
@@ -71,9 +72,10 @@ textarea {
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
-	transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
-	background-color: #0056b3;
+.error-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
