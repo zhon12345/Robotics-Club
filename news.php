@@ -48,8 +48,6 @@ $result = $con->query($sql);
         ?>
     </div>
 </section>
-</body>
-
 <?php
 if (isset($_GET['card'])) {
     $id = trim($_GET['card']);
@@ -61,11 +59,9 @@ if (isset($_GET['card'])) {
 
     if ($row = $result->fetch_object()) {
         printf(
-            '<div class="popup active">
+            '<div class="popup active" style="display: none">
                 <div class="big-card">
-                    <a href="news.php">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                    </a>
+                    <i class="fa-solid fa-xmark" onclick=popupToggle()></i>
 
                     <div class="big-content">
                         <h1>%s</h1>
@@ -84,5 +80,7 @@ if (isset($_GET['card'])) {
 $result->free();
 $con->close();
 ?>
+<script src="js/script.js"></script>
+</body>
 
 </html>
