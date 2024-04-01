@@ -90,7 +90,7 @@ if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 
-$result = $con->query("SELECT id, title, content FROM news");
+$result = $con->query("SELECT id, title, date, content FROM news");
 ?>
 
 <section class="main-section">
@@ -109,12 +109,14 @@ $result = $con->query("SELECT id, title, content FROM news");
                 <colgroup>
                     <col style="width: 3%;">
                     <col>
+                    <col style="width: 12%;">
                     <col style="width: 8%;">
                 </colgroup>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
+                        <th>Date</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -126,6 +128,7 @@ $result = $con->query("SELECT id, title, content FROM news");
                             '<tr>
                                 <td>%d</td>
                                 <td>%s</td>
+                                <td>%s</td>
                                 <td>
                                     <a href="edit.php?table=news&id=%d">Edit</a> | 
                                     <a href="news.php?delete=%d;">Delete</a>
@@ -133,6 +136,7 @@ $result = $con->query("SELECT id, title, content FROM news");
                             </tr>',
                             $row->id,
                             $row->title,
+                            date("d-M-Y", strtotime($row->date)),
                             $row->id,
                             $row->id
                         );
@@ -142,7 +146,7 @@ $result = $con->query("SELECT id, title, content FROM news");
                         <?php
                         printf(
                             '<tr>
-                                <td colspan="4">%d record(s) found.</td>
+                                <td colspan="5">%d record(s) found.</td>
                             </tr>',
                             $result->num_rows
                         );
@@ -152,7 +156,7 @@ $result = $con->query("SELECT id, title, content FROM news");
                 } else {
                 ?>
                     <tr>
-                        <td colspan="4">No records found.</td>
+                        <td colspan="5">No records found.</td>
                     </tr>
                 <?php
                 }
