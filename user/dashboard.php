@@ -20,7 +20,7 @@ include('../includes/header-user.php');
         <div class="grid">
             <a href="notifications.php"><i class="fa-regular fa-envelope"></i>View Notifications</a>
             <a href="account.php"><i class="fa-solid fa-user"></i>My Account</a>
-            <a href="ticket.php"><i class="fa-solid fa-ticket"></i>View Tickets</a>
+            <a href="tickets.php"><i class="fa-solid fa-ticket"></i>View Tickets</a>
         </div>
     </div>
 </section>

@@ -11,7 +11,7 @@ if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 
-$sql = "SELECT * FROM event";
+$sql = "SELECT * FROM events";
 
 if (isset($_GET['search'])) {
     $keyword = trim($_GET['search']);

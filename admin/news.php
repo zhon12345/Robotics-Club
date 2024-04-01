@@ -12,68 +12,32 @@ $css = '../css/admin/event.css';
 include('../includes/header-admin.php');
 require_once('../includes/helper.php');
 
+$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
+}
+
 if (!empty($_POST)) {
-    if (!isset($_POST['id'])) {
-        $title = trim($_POST['title']);
-        $content = trim($_POST['content']);
+    $id = trim($_POST['id']);
 
-        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $id  = $con->real_escape_string($id);
+    $stm = $con->prepare("DELETE FROM news WHERE id = ?");
 
-        if ($con->connect_error) {
-            die("Connection failed: " . $con->connect_error);
-        }
+    $stm->bind_param('i', $id);
 
-        $sql = 'INSERT INTO news (title, content) VALUES (?, ?)';
+    $stm->execute();
 
-        $stm = $con->prepare($sql);
-
-        $stm->bind_param('ss', $title, $content);
-
-        $stm->execute();
-
-        if ($stm->affected_rows > 0) {
-            header("Location: news.php");
-            exit();
-        } else {
-            $error_message = 'Error: Unable to insert news.';
-        }
-
-        $stm->close();
-        $con->close();
-    } else {
-        $id = trim($_POST['id']);
-
-        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-        if ($con->connect_error) {
-            die("Connection failed: " . $con->connect_error);
-        }
-
-        $id  = $con->real_escape_string($id);
-        $stm = $con->prepare("DELETE FROM news WHERE id = ?");
-
-        $stm->bind_param('i', $id);
-
-        $stm->execute();
-
-        if ($stm->affected_rows > 0) {
-            header("location: news.php");
-            exit();
-        }
-
-        $stm->close();
-        $con->close();
+    if ($stm->affected_rows > 0) {
+        header("location: news.php");
+        exit();
     }
+
+    $stm->close();
 }
 
 if (!empty($_GET)) {
     $id = isset($_GET['delete']) ? trim(($_GET['delete'])) : null;
-
-    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-    if ($con->connect_error) {
-        die("Connection failed: " . $con->connect_error);
-    }
 
     $id  = $con->real_escape_string($id);
     $sql = "SELECT * FROM news WHERE id = $id";
@@ -117,8 +81,8 @@ if (!empty($_GET)) {
     }
 
     $result->free();
-    $con->close();
 }
+$con->close();
 
 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -131,13 +95,21 @@ $result = $con->query("SELECT id, title, content FROM news");
 
 <section class="main-section">
     <div class="main-container">
-        <h1>NEWS LIST</h1>
+        <div class="taskbar">
+            <h1>NEWS LIST</h1>
+
+            <div class="buttons">
+                <a href="add.php?table=news" class="button">Add</a>
+                <a href="" class="button">Select</a>
+            </div>
+        </div>
+
         <div class="news-container">
             <table border="1">
                 <colgroup>
                     <col style="width: 3%;">
                     <col>
-                    <col style="width: 10%;">
+                    <col style="width: 8%;">
                 </colgroup>
                 <thead>
                     <tr>
@@ -170,7 +142,7 @@ $result = $con->query("SELECT id, title, content FROM news");
                         <?php
                         printf(
                             '<tr>
-                                <td colspan="4">%d records found.</td>
+                                <td colspan="4">%d record(s) found.</td>
                             </tr>',
                             $result->num_rows
                         );
@@ -189,27 +161,6 @@ $result = $con->query("SELECT id, title, content FROM news");
                 $con->close();
                 ?>
             </table>
-        </div>
-
-        <hr class="line">
-
-        <div class="news-add">
-            <h1>ADD NEWS</h1>
-            <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
-                <div class="input-container title">
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required>
-                </div>
-
-                <div class="input-container content">
-                    <label for="content">Description:</label>
-                    <textarea id="content" name="content" required></textarea>
-                </div>
-
-                <div class="input-container submit">
-                    <input type="submit" value="Submit" class="submit-button">
-                </div>
-            </form>
         </div>
     </div>
 </section>

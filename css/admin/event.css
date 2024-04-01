@@ -15,68 +15,32 @@
 	text-align: center;
 }
 
-div[class$='add'] form {
-	width: 75%;
+.taskbar {
 	display: flex;
-	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.options {
+.buttons {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	gap: 1rem;
 }
 
-.submit {
-	grid-area: submit;
-	margin-bottom: 0;
-}
-
-.input-container {
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 20px;
-}
-
-.input-container > label {
-	font-size: 20px;
-	margin-bottom: 5px;
-}
-
-.input-container > input,
-.input-container > select,
-.input-container > textarea {
-	padding: 5px;
-	height: 40px;
-	font-size: 18px;
-}
-
-div[class*='option'] > input,
-div[class*='option'] > select {
-	width: 250px;
-}
-
-.content > textarea {
-	height: 10rem;
-	resize: vertical;
-}
-
-.submit-button {
+[class$='button'] {
+	text-align: center;
 	width: 100px;
+	padding: 8px;
 	background-color: #007bff;
-	color: #fff;
-	border: none;
 	border-radius: 5px;
-	cursor: pointer;
 }
 
-.submit-button:hover {
-	background-color: #0056b3;
+[class$='button']:hover {
+	background-color: #006ee5;
 }
 
-.line {
-	border-top: 5px solid #fff;
-	margin: 2rem 0;
+.main-container div[class$='container'] {
+	margin-top: 2rem;
 }
 
 table {
@@ -96,6 +60,10 @@ td {
 td > a {
 	font-size: 16px;
 	text-decoration: underline;
+}
+
+tfoot {
+	text-align: center;
 }
 
 /* popup */
@@ -120,7 +88,7 @@ td > a {
 	justify-content: center;
 	text-align: center;
 	gap: 1rem;
-	width: 300px;
+	width: 350px;
 	padding: 20px;
 	color: var(--lead-black);
 	background-color: white;
@@ -138,5 +106,7 @@ td > a {
 
 .card form .button {
 	padding: 10px;
-	width: 120px;
+	width: 150px;
+	border: none;
+	cursor: pointer;
 }
