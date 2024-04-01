@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_query = "UPDATE user SET email = '$new_email', password = '$new_password' WHERE username = '$current_user'";
         if ($con->query($update_query) === TRUE) {
             $success_message = 'User information updated successfully.';
-            header("location: user-information.php");
+            header("location: account.php");
             exit();
         } else {
             $error_message = "Error updating record: " . $con->error;

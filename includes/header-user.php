@@ -25,8 +25,8 @@
                 <a href="dashboard.php"><i class="fa-solid fa-user"></i><?php echo $user ?></a>
             </div>
             <div class="links">
-                <a href="notification-display.php">View Notifications</a>
-                <a href="user-information.php">My Account</a>
+                <a href="notifications.php">View Notifications</a>
+                <a href="account.php">My Account</a>
             </div>
             <div class="logout">
                 <a href="../logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>

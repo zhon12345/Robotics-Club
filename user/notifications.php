@@ -1,6 +1,14 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header("location: ../login.php");
+    exit();
+}
+
 $title = 'Notifications';
 $css = '..\css\user\notification.css';
+$user = $_SESSION['user'];
 
 include('..\includes\header-user.php');
 require_once('..\includes\helper.php');
@@ -16,12 +24,12 @@ $result = $con->query($sql);
 ?>
 
 <section class="main-section">
-<h1>Notification</h1>
+    <h1>Notification</h1>
     <div class="main-container">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $date = date("Y-m-d", strtotime($row["date"]));
+                $date = date("d-M-Y", strtotime($row["date"]));
                 $title = htmlspecialchars($row["title"]);
                 $content = $row["content"];
 
