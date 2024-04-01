@@ -74,6 +74,11 @@ div[class*='option'] > select {
 	cursor: pointer;
 }
 
+.submit input:hover,
+.error-container input:hover {
+	background-color: #006ee5;
+}
+
 .error-container {
 	display: flex;
 	flex-direction: column;

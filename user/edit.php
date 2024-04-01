@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 $title = 'Edit User Information';
-$css = '../css/admin/edit.css';
+$css = '../css/user/edit.css';
 $user = $_SESSION['user'];
 
 $error_message = '';
@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <section class="main-section">
     <div class="edit-container">
         <h2>Edit User Information</h2>
+
         <?php
         if ($error_message !== '') {
             echo '<div class="error-message">' . $error_message . '</div>';
@@ -55,17 +56,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<div class="success-message">' . $success_message . '</div>';
         }
         ?>
+
         <form method="post" action="">
-            <div class="input-container">
+            <div class="input-container username">
+                <label for="username">Username:</label><br>
+                <input type="email" id="username" name="username" value="<?php echo $user ?>" disabled>
+            </div>
+
+            <div class="input-container email">
                 <label for="new_email">New Email:</label><br>
                 <input type="email" id="new_email" name="new_email">
             </div>
-            <div class="input-container">
+
+            <div class="input-container password">
                 <label for="new_password">New Password:</label><br>
                 <input type="password" id="new_password" name="new_password">
             </div>
-            <div>
-                <input type="submit" value="Submit" class="submit-button">
+
+            <div class="input-container submit">
+                <input type="submit" value="Submit">
+                <input type="button" value="Cancel" onclick="location='account.php'">
             </div>
         </form>
     </div>

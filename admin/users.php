@@ -12,14 +12,14 @@ $css = '../css/admin/event.css';
 include('../includes/header-admin.php');
 require_once('../includes/helper.php');
 
+$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
+}
+
 if (!empty($_POST)) {
     $id = trim($_POST['id']);
-
-    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-    if ($con->connect_error) {
-        die("Connection failed: " . $con->connect_error);
-    }
 
     $id  = $con->real_escape_string($id);
     $stm = $con->prepare("DELETE FROM user WHERE id = ?");
@@ -34,17 +34,10 @@ if (!empty($_POST)) {
     }
 
     $stm->close();
-    $con->close();
 }
 
 if (!empty($_GET)) {
     $id = isset($_GET['delete']) ? trim(($_GET['delete'])) : null;
-
-    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-    if ($con->connect_error) {
-        die("Connection failed: " . $con->connect_error);
-    }
 
     $id  = $con->real_escape_string($id);
     $sql = "SELECT * FROM user WHERE id = $id";
@@ -88,8 +81,8 @@ if (!empty($_GET)) {
     }
 
     $result->free();
-    $con->close();
 }
+$con->close();
 
 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -102,7 +95,15 @@ $result = $con->query("SELECT * FROM user");
 
 <section class="main-section">
     <div class="main-container">
-        <h1>USERS LIST</h1>
+        <div class="taskbar">
+            <h1>USERS LIST</h1>
+
+            <div class="buttons">
+                <a href="" class="button">Add</a>
+                <a href="" class="button">Select</a>
+            </div>
+        </div>
+
         <div class="user-container">
             <table border="1">
                 <colgroup>
@@ -110,7 +111,7 @@ $result = $con->query("SELECT * FROM user");
                     <col>
                     <col>
                     <col style="width: 10%;">
-                    <col style="width: 10%;">
+                    <col style="width: 8%;">
                 </colgroup>
                 <thead>
                     <tr>
@@ -132,6 +133,7 @@ $result = $con->query("SELECT * FROM user");
                                 <td>%s</td>
                                 <td>%s</td>
                                 <td>
+                                    <a href="">View</a> | 
                                     <a href="users.php?delete=%d">Delete</a>
                                 </td>
                             </tr>',
@@ -140,6 +142,7 @@ $result = $con->query("SELECT * FROM user");
                             $row->email,
                             $row->student_id == null ? 'No' : 'Yes',
                             $row->id,
+                            $row->id
                         );
                     }
                 ?>
@@ -147,7 +150,7 @@ $result = $con->query("SELECT * FROM user");
                         <?php
                         printf(
                             '<tr>
-                                <td colspan="5">%d records found.</td>
+                                <td colspan="5">%d record(s) found.</td>
                             </tr>',
                             $result->num_rows
                         );

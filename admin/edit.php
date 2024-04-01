@@ -14,7 +14,7 @@ require_once('../includes/helper.php');
 
 $message = array();
 
-if (empty($_GET) && empty($_POST) || (!isset($_GET['table']) || !isset($_GET['id']))) {
+if (empty($_GET) && empty($_POST)) {
     header('location: dashboard.php');
     exit();
 }
@@ -45,6 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
+    if ($con->connect_error) {
+        die("Connection failed: " . $con->connect_error);
+    }
+
     if ($table == 'events') {
         $stm = $con->prepare("UPDATE events SET title = ?, date = ?, type = ?, seats = ?, content = ? WHERE id = ?");
 
@@ -55,12 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $stm->bind_param('ssi', $title, $content, $id);
     }
 
-    if ($con->connect_error) {
-        die("Connection failed: " . $con->connect_error);
-    }
-
     if ($stm->execute()) {
         header("location: " . $table . ".php");
+        exit();
     } else {
         $message['error'] = 'Something went wrong, please try again!';
     }

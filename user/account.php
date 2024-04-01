@@ -48,7 +48,7 @@ $result = $con->query($query);
         </div>
 
         <div class="edit-button">
-            <a href="update_user.php"><button>Edit</button></a>
+            <a href="edit.php"><button>Edit</button></a>
         </div>
     </div>
 </section>
