@@ -11,7 +11,7 @@ if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 
-$sql = "SELECT * FROM events";
+$sql = "SELECT * FROM event";
 
 if (isset($_GET['search'])) {
     $keyword = trim($_GET['search']);
@@ -121,9 +121,11 @@ $result = $con->query($sql);
 
         <?php
         if ($result->num_rows > 0) {
-            echo "<div class='event-items'>";
-            while ($row = $result->fetch_assoc()) {
-                echo "
+        ?>
+            <div class='event-items'>
+                <?php
+                while ($row = $result->fetch_assoc()) {
+                    echo "
                     <div class='event-card'>
                         <div class='row title'>
                             <h1>" . htmlspecialchars($row["title"])  . " </h1>
@@ -139,13 +141,12 @@ $result = $con->query($sql);
                         <div class='event-btn'>
                             <button>Signup</button>
                         </div>
-                    </div> 
-                ";
-            }
-            echo "</div>";
-        } else {
-        ?>
+                    </div>";
+                }
+                ?>
+            </div>
         <?php
+        } else {
             echo "<div class='no-results'>No results found!</div>";
         }
         ?>
