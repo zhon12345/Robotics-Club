@@ -39,23 +39,83 @@ if (!empty($_POST)) {
 
         $stm->close();
         $con->close();
+    } else {
+        $id = trim($_POST['id']);
+
+        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        if ($con->connect_error) {
+            die("Connection failed: " . $con->connect_error);
+        }
+
+        $id  = $con->real_escape_string($id);
+        $stm = $con->prepare("DELETE FROM notification WHERE id = ?");
+
+        $stm->bind_param('i', $id);
+
+        $stm->execute();
+
+        if ($stm->affected_rows > 0) {
+            header("location: notification.php");
+            exit();
+        }
+
+        $stm->close();
+        $con->close();
     }
 }
 
-if (isset($_POST['delete_id'])) {
-    $delete_id = $_POST['delete_id'];
+if (!empty($_GET)) {
+    $id = isset($_GET['delete']) ? trim(($_GET['delete'])) : null;
+
     $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
     if ($con->connect_error) {
         die("Connection failed: " . $con->connect_error);
     }
-    $delete_query = "DELETE FROM notification WHERE id = ?";
 
-    $stm_delete = $con->prepare($delete_query);
+    $id  = $con->real_escape_string($id);
+    $sql = "SELECT * FROM notification WHERE id = $id";
 
-    $stm_delete->bind_param('s', $delete_id);
-    $stm_delete->execute();
+    $result = $con->query($sql);
 
-    $stm_delete->close();
+    if ($row = $result->fetch_object()) {
+        printf(
+            '<div class="popup active">
+                <div class="card">
+                    <h3>Confirmation</h3>
+                    <p>Are you sure you want to delete the following?</p>
+                    
+                    <table border="1">
+                    <tr>
+                        <td>ID: </td>
+                        <td>%d</td>
+                    </tr>
+                    <tr>
+                        <td>Title: </td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Content: </td>
+                        <td>%s</td>
+                    </tr>
+                    </table>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="id" value="%s" />
+                        <input type="submit" name="yes" value="Yes" class="button"/>
+                        <input type="button" value="Cancel" onclick="location=\'notification.php\'" class="button"/>
+                    </form>
+                </div>
+            </div>',
+            $row->id,
+            $row->title,
+            $row->content,
+            $row->id
+        );
+    }
+
+    $result->free();
     $con->close();
 }
 
@@ -94,7 +154,7 @@ $result = $con->query("SELECT id, title, content FROM notification");
                             <td>%s</td>
                             <td>
                                 <a href="edit.php?table=notification&id=%d">Edit</a> | 
-                                <a href="notification.php?delete=%d;">Delete</a>
+                                <a href="notification.php?delete=%d">Delete</a>
                             </td>
                         </tr>',
                             $row->id,
