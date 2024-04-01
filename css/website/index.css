@@ -1,6 +1,6 @@
-.hero-section {
+.main-section {
 	padding-top: 5rem !important;
-	padding-bottom: 0 !important;
+	padding-bottom: 3rem !important;
 }
 
 .hero-container {
@@ -29,4 +29,26 @@
 
 .text-box p {
 	font-size: 20px;
+}
+
+.section-title {
+	padding-top: 3rem;
+}
+
+.more {
+	display: flex !important;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
+}
+
+.more h1 {
+	color: var(--lead-black);
+	font-size: 36px;
+}
+
+.fa-circle-arrow-right {
+	font-size: 100px;
+	color: var(--lead-black);
 }
