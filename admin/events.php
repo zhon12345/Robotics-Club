@@ -199,7 +199,7 @@ $result = $con->query("SELECT id, title, date, type, seats, content FROM events"
                         <?php
                         printf(
                             '<tr>
-                                <td colspan="4">%d records found.</td>
+                                <td colspan="6">%d records found.</td>
                             </tr>',
                             $result->num_rows
                         );
@@ -209,7 +209,7 @@ $result = $con->query("SELECT id, title, date, type, seats, content FROM events"
                 } else {
                 ?>
                     <tr>
-                        <td colspan="5">No records found.</td>
+                        <td colspan="6">No records found.</td>
                     </tr>
                 <?php
                 }
