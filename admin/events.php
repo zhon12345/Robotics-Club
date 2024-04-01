@@ -125,7 +125,7 @@ if (!empty($_GET)) {
             </div>',
             $row->id,
             $row->title,
-            $row->date,
+            date("d-M-Y", strtotime($row->date)),
             $row->type,
             $row->seats,
             $row->content,
