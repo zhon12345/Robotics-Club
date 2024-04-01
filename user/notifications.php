@@ -14,35 +14,45 @@ include('..\includes\header-user.php');
 require_once('..\includes\helper.php');
 
 $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 
-$sql = "SELECT * FROM notification";
-$result = $con->query($sql);
-
+$result = $con->query("SELECT * FROM notification");
 ?>
 
 <section class="main-section">
-    <h1>Notification</h1>
     <div class="main-container">
+        <h1 class="section-title"><?php echo $title ?></h1>
+
         <?php
         if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $date = date("d-M-Y", strtotime($row["date"]));
-                $title = htmlspecialchars($row["title"]);
-                $content = $row["content"];
+        ?>
+            <div class="notification-items">
+                <?php
+                while ($row = $result->fetch_object()) {
+                    printf(
+                        '<div class="notification-card">
+                            <div class="row details">
+                                <h1>%s</h1>
+                                <p>%s</p>
+                            </div>
 
-                echo "<div class='event-item'>";
-                echo "<div class='event-details'>";
-                echo "<div class='event-date'>date：$date</div>";
-                echo "<div class='event-title'>title：$title</div>";
-                echo "<div class='event-content'>content：$content</div>";
-                echo "</div>";
-                echo "</div>";
-            }
+                            <div class="row content">
+                                <p>%s</p>
+                            </div>
+                        </div>',
+                        htmlspecialchars($row->title),
+                        date("d-M-Y", strtotime($row->date)),
+                        $row->content
+                    );
+                }
+                ?>
+            </div>
+        <?php
         } else {
-            echo "<div class='no-results'>0 result</div>";
+            echo "<div class='no-results'>No results found!</div>";
         }
         ?>
     </div>
@@ -53,5 +63,6 @@ $result = $con->query($sql);
 </html>
 
 <?php
+$result->free();
 $con->close();
 ?>
