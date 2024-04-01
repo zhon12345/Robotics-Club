@@ -7,25 +7,94 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $title = 'User Management';
-$css = '../css/admin/users.css';
+$css = '../css/admin/event.css';
 
 include('../includes/header-admin.php');
 require_once('../includes/helper.php');
 
-$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($con->connect_error) {
-    die("Connection failed: " . $con->connect_error);
+if (!empty($_POST)) {
+    $id = trim($_POST['id']);
+
+    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    if ($con->connect_error) {
+        die("Connection failed: " . $con->connect_error);
+    }
+
+    $id  = $con->real_escape_string($id);
+    $stm = $con->prepare("DELETE FROM user WHERE id = ?");
+
+    $stm->bind_param('i', $id);
+
+    $stm->execute();
+
+    if ($stm->affected_rows > 0) {
+        header("location: users.php");
+        exit();
+    }
+
+    $stm->close();
+    $con->close();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username'])) {
-    $username = $_POST['username'];
+if (!empty($_GET)) {
+    $id = isset($_GET['delete']) ? trim(($_GET['delete'])) : null;
 
-    $delete_query = "DELETE FROM user WHERE username = '$username'";
-    if ($con->query($delete_query) === TRUE) {
-        echo "<script>alert('User deleted successfully.');</script>";
-    } else {
-        echo "<script>alert('Error deleting user.');</script>";
+    $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    if ($con->connect_error) {
+        die("Connection failed: " . $con->connect_error);
     }
+
+    $id  = $con->real_escape_string($id);
+    $sql = "SELECT * FROM user WHERE id = $id";
+
+    $result = $con->query($sql);
+
+    if ($row = $result->fetch_object()) {
+        printf(
+            '<div class="popup active">
+                <div class="card">
+                    <h3>Confirmation</h3>
+                    <p>Are you sure you want to delete the following?</p>
+                    
+                    <table border="1">
+                    <tr>
+                        <td>ID: </td>
+                        <td>%d</td>
+                    </tr>
+                    <tr>
+                        <td>Username: </td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td>%s</td>
+                    </tr>
+                    </table>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="username" value="%s" />
+                        <input type="submit" name="yes" value="Yes" class="button"/>
+                        <input type="button" value="Cancel" onclick="location=\'users.php\'" class="button"/>
+                    </form>
+                </div>
+            </div>',
+            $row->id,
+            $row->username,
+            $row->email,
+            $row->username
+        );
+    }
+
+    $result->free();
+    $con->close();
+}
+
+$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
 }
 
 $result = $con->query("SELECT * FROM user");
@@ -33,48 +102,70 @@ $result = $con->query("SELECT * FROM user");
 
 <section class="main-section">
     <div class="main-container">
-        <h2>Registered Users</h2>
+        <h1>USERS LIST</h1>
+        <div class="user-container">
+            <table border="1">
+                <colgroup>
+                    <col style="width: 3%;">
+                    <col>
+                    <col>
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Student</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
 
-        <?php
-        $totalUsersResult = $con->query("SELECT COUNT(*) AS total_users FROM user");
-        $totalUsers = 0;
-
-        if ($totalUsersResult && $totalUsersResult->num_rows > 0) {
-            $totalUsersData = $totalUsersResult->fetch_assoc();
-            $totalUsers = $totalUsersData['total_users'];
-        }
-
-        echo "<div style='color: white;'>Total Users: $totalUsers</div>";
-        ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
                 <?php
-                if ($result && $result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $row['username'] . "</td>";
-                        echo "<td>" . $row['email'] . "</td>";
-                        echo "<td>
-                                <form action='' method='post'>
-                                    <input type='hidden' name='username' value='" . $row['username'] . "'>
-                                    <button type='submit'>Delete</button>
-                                </form>
-                              </td>";
-                        echo "</tr>";
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_object()) {
+                        printf(
+                            '<tr>
+                            <td>%d</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td>
+                                    <a href="users.php?delete=%d">Delete</a>
+                                </td>
+                            </tr>',
+                            $row->id,
+                            $row->username,
+                            $row->email,
+                            $row->student_id == null ? 'No' : 'Yes',
+                            $row->id,
+                        );
                     }
-                } else {
-                    echo "<tr><td colspan='3'>No users found.</td></tr>";
-                }
                 ?>
-            </tbody>
-        </table>
+                    <tfoot>
+                        <?php
+                        printf(
+                            '<tr>
+                                <td colspan="5">%d records found.</td>
+                            </tr>',
+                            $result->num_rows
+                        );
+                        ?>
+                    </tfoot>
+                <?php
+                } else {
+                ?>
+                    <tr>
+                        <td colspan="5">No records found.</td>
+                    </tr>
+                <?php
+                }
+
+                $result->free();
+                $con->close();
+                ?>
+            </table>
+        </div>
     </div>
 </section>

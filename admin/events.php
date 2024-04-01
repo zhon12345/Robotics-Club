@@ -148,66 +148,76 @@ $result = $con->query("SELECT id, title, date, type, seats, content FROM events"
 
 <section class="main-section">
     <div class="main-container">
-        <div class="events-list">
-            <h1>EVENT LIST</h1>
-            <div class="event-container">
-                <table border="1">
-                    <colgroup>
-                        <col style="width: 3%;">
-                        <col>
-                        <col>
-                        <col>
-                        <col style="width: 10%;">
-                        <col style="width: 10%;">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Seats</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
+        <h1>EVENT LIST</h1>
+        <div class="event-container">
+            <table border="1">
+                <colgroup>
+                    <col style="width: 3%;">
+                    <col>
+                    <col>
+                    <col>
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Seats</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
 
-                    <?php
-                    if ($result->num_rows > 0 && $result->num_rows <= 20) {
-                        while ($row = $result->fetch_object()) {
-                            printf(
-                                '<tr>
-                                    <td>%d</td>
-                                    <td>%s</td>
-                                    <td>%s</td>
-                                    <td>%s</td>
-                                    <td>%d</td>
-                                    <td>
-                                        <a href="edit.php?table=events&id=%d">Edit</a> | 
-                                        <a href="events.php?delete=%d;">Delete</a>
-                                    </td>
-                                </tr>',
-                                $row->id,
-                                $row->title,
-                                date("d-M-Y", strtotime($row->date)),
-                                $row->type,
-                                $row->seats,
-                                $row->id,
-                                $row->id
-                            );
-                        }
-                    } else {
-                    ?>
-                        <tr>
-                            <td colspan="5">No records found.</td>
-                        </tr>
-                    <?php
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_object()) {
+                        printf(
+                            '<tr>
+                                <td>%d</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td>%d</td>
+                                <td>
+                                    <a href="edit.php?table=events&id=%d">Edit</a> | 
+                                    <a href="events.php?delete=%d;">Delete</a>
+                                </td>
+                            </tr>',
+                            $row->id,
+                            $row->title,
+                            date("d-M-Y", strtotime($row->date)),
+                            $row->type,
+                            $row->seats,
+                            $row->id,
+                            $row->id
+                        );
                     }
+                ?>
+                    <tfoot>
+                        <?php
+                        printf(
+                            '<tr>
+                                <td colspan="4">%d records found.</td>
+                            </tr>',
+                            $result->num_rows
+                        );
+                        ?>
+                    </tfoot>
+                <?php
+                } else {
+                ?>
+                    <tr>
+                        <td colspan="5">No records found.</td>
+                    </tr>
+                <?php
+                }
 
-                    $result->free();
-                    $con->close();
-                    ?>
-                </table>
-            </div>
+                $result->free();
+                $con->close();
+                ?>
+            </table>
         </div>
 
         <hr class="line">

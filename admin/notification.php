@@ -146,7 +146,7 @@ $result = $con->query("SELECT id, title, content FROM notification");
                     </tr>
                 </thead>
                 <?php
-                if ($result->num_rows > 0 && $result->num_rows <= 20) {
+                if ($result->num_rows > 0) {
                     while ($row = $result->fetch_object()) {
                         printf(
                             '<tr>
@@ -163,6 +163,18 @@ $result = $con->query("SELECT id, title, content FROM notification");
                             $row->id
                         );
                     }
+                ?>
+                    <tfoot>
+                        <?php
+                        printf(
+                            '<tr>
+                                <td colspan="4">%d records found.</td>
+                            </tr>',
+                            $result->num_rows
+                        );
+                        ?>
+                    </tfoot>
+                <?php
                 } else {
                 ?>
                     <tr>

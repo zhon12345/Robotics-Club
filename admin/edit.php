@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 
-$title = 'Edit News';
+$title = 'Edit';
 $css = '../css/admin/edit.css';
 
 include('../includes/header-admin.php');
@@ -14,7 +14,7 @@ require_once('../includes/helper.php');
 
 $message = array();
 
-if (!isset($_GET['table']) && empty($_POST)) {
+if (empty($_GET) && empty($_POST) || (!isset($_GET['table']) || !isset($_GET['id']))) {
     header('location: dashboard.php');
     exit();
 }
