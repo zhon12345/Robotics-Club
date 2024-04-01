@@ -19,9 +19,7 @@ if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 
-$current_user = $_SESSION['user'];
-
-$query = "SELECT * FROM user WHERE username = '$current_user'";
+$query = "SELECT * FROM user WHERE username = '$user'";
 $result = $con->query($query);
 
 ?>
@@ -34,7 +32,6 @@ $result = $con->query($query);
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Password</th>
                 </tr>
                 <?php
                 if ($result && $result->num_rows > 0) {
@@ -42,7 +39,6 @@ $result = $con->query($query);
                     echo "<tr>";
                     echo "<td>" . $row['username'] . "</td>";
                     echo "<td>" . $row['email'] . "</td>";
-                    echo "<td>" . $row['password'] . "</td>";
                     echo "</tr>";
                 } else {
                     echo "<tr><td colspan='3'>No user information available.</td></tr>";
