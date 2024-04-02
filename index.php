@@ -12,8 +12,6 @@ if ($con->connect_error) {
 	die("Connection failed: " . $con->connect_error);
 }
 
-$sql = "SELECT * FROM news LIMIT 3";
-
 $result = $con->query($sql);
 ?>
 
