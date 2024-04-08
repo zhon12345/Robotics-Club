@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $seats = $row->seats;
         }
     ?>
-        <div class="form-container" <?php if ($table == 'events') echo 'style="width: 30vw;"' ?>>
+        <div class="form-container">
             <h1>Edit <?php echo ucfirst($table) ?></h1>
 
             <?php
