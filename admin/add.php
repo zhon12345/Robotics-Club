@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 ?>
 
 <section class="main-section">
-    <div class="form-container" <?php if ($table == 'events') echo 'style="width: 30vw;"' ?>>
+    <div class="form-container">
         <h1>Add <?php echo ucfirst($table) ?></h1>
 
         <?php
