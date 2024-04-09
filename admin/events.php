@@ -127,7 +127,7 @@ $result = $con->query("SELECT id, title, date, type, seats, content FROM events"
                     <col style="width: 12%;">
                     <col style="width: 12%;">
                     <col style="width: 10%;">
-                    <col style="width: 8%;">
+                    <col style="width: 10%;">
                 </colgroup>
                 <thead>
                     <tr>

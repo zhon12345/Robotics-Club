@@ -110,7 +110,7 @@ $result = $con->query("SELECT id, title, date, content FROM news");
                     <col style="width: 3%;">
                     <col>
                     <col style="width: 12%;">
-                    <col style="width: 8%;">
+                    <col style="width: 10%;">
                 </colgroup>
                 <thead>
                     <tr>
