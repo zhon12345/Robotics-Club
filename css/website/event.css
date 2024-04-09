@@ -135,17 +135,19 @@
 	margin-bottom: 8px;
 }
 
-.event-btn {
+.content {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 }
 
-.event-btn button {
+.content button {
 	width: 130px;
+	height: 40px;
+	align-self: self-end;
 	border-radius: 8px;
 }
 
-.event-btn button:hover {
+.content button:hover {
 	color: white;
 	background-color: var(--lead-black);
 }

@@ -137,8 +137,6 @@ $result = $con->query($sql);
                         </div>
                         <div class='row content'>
                             <p>" . nl2br($row["content"]) . "</p>
-                        </div>
-                        <div class='event-btn'>
                             <button>Signup</button>
                         </div>
                     </div>";
