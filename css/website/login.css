@@ -1,8 +1,7 @@
 .account-section {
 	padding-top: 8rem !important;
-	padding-bottom: 4rem !important;
-	height: 100vh;
-	display: flex;
+	padding-bottom: 3rem !important;
+	min-height: 100vh;
 }
 
 .forms-container {
@@ -187,55 +186,4 @@ header {
 .form-button > input:hover {
 	background-color: var(--eerie-black);
 	color: white;
-}
-
-/* Media Buttons */
-.line {
-	background-color: #898989;
-	position: relative;
-	height: 1px;
-	width: 100%;
-	margin: 38px 0 30px;
-}
-
-.line::before {
-	content: 'OR';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #fff;
-	color: var(--lead-black);
-	padding: 0 10px;
-}
-
-.media-options {
-	display: flex;
-	justify-content: space-around;
-	margin-top: 1.5rem;
-}
-
-.media-options a {
-	color: var(--lead-black);
-	width: 45%;
-	height: 2.7rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 0.5rem;
-	border: 1px solid #898989;
-	border-radius: 2px;
-	transition: all 0.2s ease-in;
-}
-
-.media-options a:hover {
-	border-color: var(--black);
-}
-
-.media-options svg {
-	width: 25px;
-}
-
-.media-options span {
-	font-size: 14px;
 }
