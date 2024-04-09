@@ -42,14 +42,15 @@ h1 {
 }
 
 .options {
+	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
 
-div[class*='option'] > input,
-div[class*='option'] > select {
-	width: 200px;
+div[class^='option-'],
+div[class*='option-'] {
+	width: 30%;
 }
 
 .content > textarea {

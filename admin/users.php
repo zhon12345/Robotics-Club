@@ -111,7 +111,7 @@ $result = $con->query("SELECT * FROM user");
                     <col>
                     <col>
                     <col style="width: 10%;">
-                    <col style="width: 8%;">
+                    <col style="width: 10%;">
                 </colgroup>
                 <thead>
                     <tr>
