@@ -112,10 +112,6 @@ require_once('includes/helper.php');
 				<span>Don't have an account? <a href="register.php">Signup</a></span>
 			</div>
 		</div>
-
-		<?php
-		include('includes/media-options.php');
-		?>
 	</div>
 </section>
 </body>

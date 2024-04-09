@@ -115,10 +115,6 @@ global $isSuccess;
             <div class="form-link">
                 <span>Already have an account? <a href="login.php">Login</a></span>
             </div>
-
-            <?php
-            include('includes/media-options.php');
-            ?>
         </div>
     </div>
 </section>
