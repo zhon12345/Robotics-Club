@@ -28,50 +28,41 @@ require_once('includes/helper.php');
 				$username = trim($_POST['username']);
 				$password = trim($_POST['password']);
 
-				if ($username == ADMIN_USER && $password == ADMIN_PASS) {
-					$_SESSION['admin'] = $username;
+				$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-					$username = $password = null;
+				$username  = $con->real_escape_string($username);
+				$sql = "SELECT username, password FROM user WHERE username = ?";
 
-					header("location: admin/dashboard.php");
-					exit();
-				} else {
-					$con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+				$stm = $con->prepare($sql);
 
-					$username  = $con->real_escape_string($username);
-					$sql = "SELECT username, password FROM user WHERE username = ?";
+				$stm->bind_param('s', $username);
 
-					$stm = $con->prepare($sql);
+				$stm->execute();
+				$stm->store_result();
 
-					$stm->bind_param('s', $username);
+				if ($stm->num_rows > 0) {
+					$stm->bind_result($username, $hashed_password);
 
-					$stm->execute();
-					$stm->store_result();
+					$stm->fetch();
 
-					if ($stm->num_rows > 0) {
-						$stm->bind_result($username, $hashed_password);
+					if (password_verify($password, $hashed_password)) {
+						$_SESSION['user'] = $username;
 
-						$stm->fetch();
+						$username = $password = null;
 
-						if (password_verify($password, $hashed_password)) {
-							$_SESSION['user'] = $username;
-
-							$username = $password = null;
-
-							header("location: user/dashboard.php");
-							exit();
-						} else {
-							$error['password'] = 'Invalid password.';
-						}
+						header("location: user/dashboard.php");
+						exit();
 					} else {
-						$error['username'] = 'Invalid Username';
+						$error['username'] = $error['password'] = 'Invalid username or password';
 					}
-
-					$stm->close();
-					$con->close();
-
-					$error = array_filter($error);
+				} else {
+					$error['username'] = $error['password'] = 'Invalid username or password';
 				}
+
+				$stm->close();
+				$con->close();
+
+				$error = array_filter($error);
 			} else {
 				$username = '';
 				$password = '';
