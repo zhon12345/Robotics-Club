@@ -48,6 +48,7 @@ $result = $con->query($sql);
         ?>
     </div>
 </section>
+
 <?php
 if (isset($_GET['card'])) {
     $id = trim($_GET['card']);
@@ -80,6 +81,7 @@ if (isset($_GET['card'])) {
 $result->free();
 $con->close();
 ?>
+
 <script src="js/script.js"></script>
 </body>
 
