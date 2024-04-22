@@ -36,7 +36,7 @@ if (!empty($_POST)) {
     $stm->close();
 }
 
-if (!empty($_GET)) {
+if (!empty($_GET) && isset($_GET['delete'])) {
     $id = isset($_GET['delete']) ? trim(($_GET['delete'])) : null;
 
     $id  = $con->real_escape_string($id);
@@ -126,13 +126,16 @@ $result = $con->query("SELECT id, title, date, content FROM notification");
                         printf(
                             '<tr>
                             <td>%d</td>
-                            <td>%s</td>
+                            <td>
+                                <a href="notification.php?view=%d">%s</a>
+                            </td>
                             <td>%s</td>
                             <td>
                                 <a href="edit.php?table=notification&id=%d">Edit</a> | 
                                 <a href="notification.php?delete=%d">Delete</a>
                             </td>
                         </tr>',
+                            $row->id,
                             $row->id,
                             $row->title,
                             date("d-M-Y", strtotime($row->date)),
@@ -159,15 +162,46 @@ $result = $con->query("SELECT id, title, date, content FROM notification");
                     </tr>
                 <?php
                 }
-
-                $result->free();
-                $con->close();
                 ?>
             </table>
         </div>
     </div>
 </section>
 
+<?php
+if (isset($_GET['view'])) {
+    $id = trim($_GET['view']);
+
+    $id = $con->real_escape_string($id);
+    $sql = "SELECT * FROM notification WHERE id = $id";
+
+    $result = $con->query($sql);
+
+    if ($row = $result->fetch_object()) {
+        printf(
+            '<div class="popup active" style="display: none">
+                <div class="big-card">
+                    <i class="fa-solid fa-xmark" onclick=popupToggle()></i>
+
+                    <div class="big-content">
+                        <h1>%s</h1>
+                        <span>%s</span>
+                        <p>%s</p>
+                    </div>
+                </div>
+            </div>',
+            $row->title,
+            date("d-M-Y", strtotime($row->date)),
+            $row->content
+        );
+    }
+}
+
+$result->free();
+$con->close();
+?>
+
+<script src="../js/script.js"></script>
 </body>
 
 </html>

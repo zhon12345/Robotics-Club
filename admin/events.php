@@ -36,7 +36,7 @@ if (!empty($_POST)) {
     $stm->close();
 }
 
-if (!empty($_GET)) {
+if (!empty($_GET) && isset($_GET['delete'])) {
     $id = isset($_GET['delete']) ? trim(($_GET['delete'])) : null;
 
     $id  = $con->real_escape_string($id);
@@ -146,15 +146,18 @@ $result = $con->query("SELECT id, title, date, type, seats, content FROM events"
                         printf(
                             '<tr>
                                 <td>%d</td>
-                                <td>%s</td>
+                                <td>
+                                <a href="events.php?view=%d">%s</a>
+                            </td>
                                 <td>%s</td>
                                 <td>%s</td>
                                 <td>%d</td>
                                 <td>
                                     <a href="edit.php?table=events&id=%d">Edit</a> | 
-                                    <a href="events.php?delete=%d;">Delete</a>
+                                    <a href="events.php?delete=%d">Delete</a>
                                 </td>
                             </tr>',
+                            $row->id,
                             $row->id,
                             $row->title,
                             date("d-M-Y", strtotime($row->date)),
@@ -183,14 +186,48 @@ $result = $con->query("SELECT id, title, date, type, seats, content FROM events"
                     </tr>
                 <?php
                 }
-
-                $result->free();
-                $con->close();
                 ?>
             </table>
         </div>
     </div>
 </section>
+
+<?php
+if (isset($_GET['view'])) {
+    $id = trim($_GET['view']);
+
+    $id = $con->real_escape_string($id);
+    $sql = "SELECT * FROM events WHERE id = $id";
+
+    $result = $con->query($sql);
+
+    if ($row = $result->fetch_object()) {
+        printf(
+            '<div class="popup active" style="display: none">
+                <div class="big-card">
+                    <i class="fa-solid fa-xmark" onclick=popupToggle()></i>
+
+                    <div class="big-content">
+                        <h1>%s</h1>
+                        <span>%s &#8226; %s &#8226; %d seats remaining</span>
+                        <p>%s</p>
+                    </div>
+                </div>
+            </div>',
+            $row->title,
+            date("d-M-Y", strtotime($row->date)),
+            $row->type,
+            $row->seats,
+            nl2br($row->content)
+        );
+    }
+}
+
+$result->free();
+$con->close();
+?>
+
+<script src="../js/script.js"></script>
 </body>
 
 </html>
