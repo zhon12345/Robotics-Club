@@ -17,11 +17,9 @@ include('../includes/header-user.php');
     <div class="main-container">
         <h2>Welcome <b><?php echo $user ?></b>, what would you like to do?</h2>
 
-        <div class="grid">
-            <a href="notifications.php"><i class="fa-regular fa-envelope"></i>View Notifications</a>
-            <a href="account.php"><i class="fa-solid fa-user"></i>My Account</a>
-            <a href="tickets.php"><i class="fa-solid fa-ticket"></i>View Tickets</a>
-        </div>
+        <a href="notifications.php"><i class="fa-regular fa-envelope"></i>View Notifications</a>
+        <a href="account.php"><i class="fa-solid fa-user"></i>My Account</a>
+        <a href="tickets.php"><i class="fa-solid fa-ticket"></i>View Tickets</a>
     </div>
 </section>
 

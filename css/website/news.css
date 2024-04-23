@@ -39,7 +39,7 @@
 }
 
 .title h1 {
-	font-size: 28px;
+	font-size: clamp(23px, 60% + 1vw, 30px);
 	color: var(--lead-black);
 	margin-bottom: 10px;
 }

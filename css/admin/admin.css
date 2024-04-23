@@ -55,21 +55,19 @@ a {
 
 .main-container {
 	width: 80vw;
-}
-
-h2 {
-	font-weight: 300;
-	margin-bottom: 3rem;
-}
-
-.grid {
 	display: grid;
-	grid-template-columns: repeat(2, 48.5%);
-	justify-content: space-between;
+	grid-template-areas: 'head head';
+	grid-template-columns: repeat(2, 45%);
+	justify-content: center;
 	gap: 2.3rem;
 }
 
-.grid > a {
+h2 {
+	grid-area: head;
+	font-weight: 300;
+}
+
+.main-container > a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
