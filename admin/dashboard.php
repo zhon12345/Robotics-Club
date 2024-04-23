@@ -13,7 +13,7 @@ include('../includes/header-admin.php');
 
 <!-- content -->
 <section class="main-section">
-    <div class="main-container">
+    <div class="main-container dashboard">
         <h2>Welcome <b><?php echo ADMIN_USER ?></b>, what would you like to do?</h2>
 
         <a href="events.php"><i class="fa-regular fa-calendar-days"></i>Manage Events</a>
