@@ -55,6 +55,9 @@ a {
 
 .main-container {
 	width: 80vw;
+}
+
+.dashboard {
 	display: grid;
 	grid-template-areas: 'head head';
 	grid-template-columns: repeat(2, 45%);

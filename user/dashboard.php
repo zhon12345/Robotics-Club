@@ -14,7 +14,7 @@ include('../includes/header-user.php');
 
 <!-- content -->
 <section class="main-section">
-    <div class="main-container">
+    <div class="main-container dashboard">
         <h2>Welcome <b><?php echo $user ?></b>, what would you like to do?</h2>
 
         <a href="notifications.php"><i class="fa-regular fa-envelope"></i>View Notifications</a>
