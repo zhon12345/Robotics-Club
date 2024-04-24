@@ -140,14 +140,21 @@
 	justify-content: space-between;
 }
 
-.content button {
+.content input {
 	width: 130px;
 	height: 40px;
 	align-self: self-end;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--eerie-black);
+	background: transparent;
+	border: 2px solid var(--eerie-black);
 	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.3s ease;
 }
 
-.content button:hover {
+.content input:hover {
 	color: white;
 	background-color: var(--lead-black);
 }

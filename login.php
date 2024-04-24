@@ -50,7 +50,7 @@ require_once('includes/helper.php');
 
 						$username = $password = null;
 
-						header("location: user/dashboard.php");
+						header("location: index.php");
 						exit();
 					} else {
 						$error['username'] = $error['password'] = 'Invalid username or password';
