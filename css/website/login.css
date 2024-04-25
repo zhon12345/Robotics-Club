@@ -125,7 +125,6 @@ header {
 }
 
 .form-input small {
-	visibility: hidden;
 	position: absolute;
 	padding-top: 2px;
 }

@@ -80,3 +80,11 @@ function getSeats()
 }
 
 $SEATS = getSeats();
+
+//add.php
+function isEmpty($value)
+{
+    if ($value == null) {
+        return 'Field cannot be blank';
+    }
+}

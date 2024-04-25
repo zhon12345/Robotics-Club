@@ -50,7 +50,11 @@ require_once('includes/helper.php');
 
 						$username = $password = null;
 
-						header("location: index.php");
+						if (isset($_GET['redirect'])) {
+							header("location: " . $_GET['redirect']);
+						} else {
+							header("location: index.php");
+						}
 						exit();
 					} else {
 						$error['username'] = $error['password'] = 'Invalid username or password';
@@ -69,7 +73,7 @@ require_once('includes/helper.php');
 			}
 			?>
 
-			<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="login">
+			<form method="post" class="login">
 				<div class="form-input <?php echo isset($error) && isset($error['username']) ? 'error' : (!empty($_POST) && !isset($error['username']) ? 'success' : '') ?> ">
 					<label for="username">Username</label>
 					<span class="fa-solid fa-user"></span>

@@ -71,7 +71,7 @@ if (isset($_POST['event'])) {
         header("location: booking.php");
         exit();
     } else {
-        header("location: login.php");
+        header("location: login.php?redirect=event.php");
         exit();
     }
 }
