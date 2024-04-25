@@ -39,6 +39,8 @@ h1 {
 	padding: 5px;
 	height: 40px;
 	font-size: 18px;
+	background-color: #3b3b3b;
+	border-radius: 4px;
 }
 
 .options {
@@ -56,6 +58,20 @@ div[class*='option-'] {
 .content > textarea {
 	height: 10rem;
 	resize: vertical;
+}
+
+.input-container.error input,
+.input-container.error textarea {
+	border-color: #e74c3c;
+}
+
+.input-container.error small {
+	visibility: visible;
+	color: #e74c3c;
+}
+
+small {
+	margin-top: 5px;
 }
 
 .submit {
