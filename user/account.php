@@ -44,7 +44,6 @@ $result = $con->query($query);
                     echo "<td class='attribute'>Email</td>";
                     echo "<td class='details'>" . $row['email'] . "</td>";
                     echo "</tr>";
-                    // Add more rows for additional user information here if needed
                 } else {
                     echo "<tr><td colspan='2'>No user information available.</td></tr>";
                 }
