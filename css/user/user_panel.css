@@ -1,0 +1,55 @@
+.main-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.user-info-table-container {
+	width: 80%; /* Adjust width as needed */
+	margin-top: 20px;
+}
+
+.user-info-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.user-info-table th,
+.user-info-table td {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.user-info-table th {
+	background-color: #f2f2f2;
+	color: #333;
+	text-align: left;
+}
+
+.user-info-table .attribute {
+	font-weight: bold;
+}
+
+.user-info-table .details {
+	color: #ffffff;
+}
+
+.edit-button {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.edit-btn {
+	padding: 10px 20px;
+	background-color: #ffffff;
+	color: rgb(0, 0, 0);
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.edit-btn:hover {
+	background-color: #000000;
+}
